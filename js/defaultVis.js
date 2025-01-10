@@ -1,4 +1,4 @@
-class visualizeMap {
+class defaultVis {
     constructor() {
         this.data = data;
     }
