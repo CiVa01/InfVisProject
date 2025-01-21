@@ -1,0 +1,112 @@
+
+body {
+	font-family: 'Lato', sans-serif;
+	background-color: #ffffff;
+}
+
+h1 {
+  color: #865F3C;
+  margin-top: 40px;
+  font-weight: 300;
+}
+
+h2 {
+	font-weight: 100;
+  font-size: 20px;
+  margin-bottom: 30px;
+  color: #906666;
+}
+
+.form-inline {
+  margin-bottom: 30px;
+}
+
+
+
+.bar {
+  fill: #232323;
+}
+
+.axis {
+  font: 10px sans-serif;
+  fill: rgba(51, 51, 51, 0);
+}
+
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: rgba(51, 51, 51, 0);
+  shape-rendering: crispEdges;
+}
+
+.x-axis {
+  font-size: 12px;
+}
+
+.x-axis path {
+  display: none;
+}
+
+.label {
+    fill: #ffffff;
+    font: 10px sans-serif;
+}
+
+.chart-title {
+    fill: #000000;
+    font: 12px sans-serif;
+    font-weight: bold;
+}
+
+.chart-area {
+  background-color: #dadada;
+  padding: 10px;
+  margin: 10px 0;
+  width: 220px;
+  border-radius: 23px;
+}
+
+
+button{
+  width: 26px; /* Stel de breedte in */
+  height: 26px; /* Stel de hoogte in */
+  border-radius: 50%; /* Zorg ervoor dat de knop rond is */
+  border: none; /* Verwijder de rand */
+  background-color: #bdbdbd; /* Primaire knopkleur */
+  color: #000000; /* Kleur van de tekst of icon */
+  display: flex; /* Zorg ervoor dat de inhoud goed wordt gecentreerd */
+  align-items: center; /* Verticaal centreren */
+  justify-content: center; /* Horizontaal centreren */
+  cursor: pointer; /* Maak de cursor een pointer */
+  transition: background-color 0.3s ease; /* Animatie voor hover */
+}
+
+button:hover {
+  background-color: #a1a1a1; /* Donkerdere kleur bij hover */
+}
+
+.buttonSort.clicked {
+  background-color: #989898;  /* Change this to your desired darker color */
+}
+
+#button-div {
+  display: flex;
+  gap: 10px; /* Adds spacing between the buttons */
+  justify-content: right; /* Center-aligns the buttons */
+  align-items: center; /* Vertically aligns the buttons if they have different heights */
+}
+
+.arrow {
+  padding-top: -15px;  /* Adjust this value to move the arrow vertically */
+}
+
+.arrow-up {
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+.arrow-down {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
