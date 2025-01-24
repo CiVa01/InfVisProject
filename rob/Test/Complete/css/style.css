@@ -63,7 +63,7 @@ h2 {
   background-color: #dadada;
   padding: 10px;
   margin: 10px 0;
-  width: 220px;
+  width: 210px;
   border-radius: 23px;
 }
 
@@ -86,8 +86,9 @@ button:hover {
   background-color: #a1a1a1; /* Donkerdere kleur bij hover */
 }
 
-.buttonSort.clicked {
-  background-color: #989898;  /* Change this to your desired darker color */
+.buttonSort.active {
+  background-color: #7a7a7a; /* Donkere kleur voor de knop */
+  color: white;            /* Tekstkleur wit */
 }
 
 #button-div {
@@ -99,6 +100,8 @@ button:hover {
 
 .arrow {
   padding-top: -15px;  /* Adjust this value to move the arrow vertically */
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .arrow-up {

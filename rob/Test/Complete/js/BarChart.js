@@ -1,17 +1,23 @@
 class BarChart {
 	constructor({ container, width, height, dataPath, chartId }) {
-		this.chartId = chartId; // Unieke ID voor deze grafiek
+		this.chartId = chartId; // Unique ID for this chart
 		this.container = container;
-		this.margin = { top: 30, right: 30, bottom: 30, left: 70 };
-		this.width = (width || 250) - this.margin.left - this.margin.right;
-		this.height = (height || 150) - this.margin.top - this.margin.bottom;
+		this.margin = { top: 40, right: 40, bottom: 15, left: 70 };
+		this.width = (width) - this.margin.left - this.margin.right;
+		this.height = (height) - this.margin.top - this.margin.bottom;
 
-		// Voeg de knop toe in de container
-		this.currentRankingType = "in"; // Start met "Top 5 in"
-		this.createToggleButton();
+		// Initialize properties
+		this.immigration = true; //
+		this.percentage = false;
 
-		// SVG element maken
-		this.svg = d3.select(container)
+		this.init();
+		this.createButtons();
+		this.setupEventListeners();
+		this.loadData(dataPath);
+	}
+
+	init() {
+		this.svg = d3.select(this.container)
 			.append("svg")
 			.attr("width", this.width + this.margin.left + this.margin.right)
 			.attr("height", this.height + this.margin.top + this.margin.bottom)
@@ -27,21 +33,14 @@ class BarChart {
 		this.chartTitle = this.svg.append("text")
 			.attr("class", "chart-title")
 			.attr("x", -65)
-			.attr("y", -10)
+			.attr("y", -15)
 			.text("");
-
-		this.reverse = false;
-
-		this.setupEventListeners();
-
-		this.loadData(dataPath);
 	}
 
-	// Dynamisch knop toevoegen
-	createToggleButton() {
+	createButtons() {
 		const buttonHtml = `
         <button type="button" class="buttonTop" id="${this.chartId}-toggle-ranking">
-            <span class="arrow">↑</span>
+            <span class="arrow">↥</span>
         </button>
         <button type="button" class="buttonSort" id="${this.chartId}-change-sorting">
             %
@@ -54,32 +53,35 @@ class BarChart {
 			.html(buttonHtml);
 	}
 
-
 	setupEventListeners() {
 		// Toggle ranking button
 		d3.select(`#${this.chartId}-toggle-ranking`).on("click", () => {
-			this.currentRankingType = this.currentRankingType === "in" ? "out" : "in";
-			d3.select(`#${this.chartId}-toggle-ranking`)
-				// .text(this.currentRankingType === "in" ? "↓" : "↓")
-				.classed("arrow-up", this.currentRankingType === "in")
-				.classed("arrow-down", this.currentRankingType === "out");
+			this.arrowAnimation();
 			this.updateVisualization();
 		});
 
 		// Change sorting button
 		d3.select(`#${this.chartId}-change-sorting`).on("click", () => {
-			this.reverse = !this.reverse;
-			const button = d3.select(`#${this.chartId}-change-sorting`);
-			button.classed("clicked", this.reverse);
-			d3.select(`#${this.chartId}-change-sorting`).text(this.reverse ? "%" : "%");
+			this.percentage = !this.percentage;
 			this.updateVisualization();
+
+			d3.select(`#${this.chartId}-change-sorting`)
+				.classed("active", this.percentage);
 		});
+	}
+
+	arrowAnimation() {
+		this.immigration = !this.immigration; // Toggle between true (in) and false (out)
+		d3.select(`#${this.chartId}-toggle-ranking`)
+			.classed("arrow-up", this.immigration) // true means "in"
+			.classed("arrow-down", !this.immigration); // false means "out"
 	}
 
 	loadData(dataPath) {
 		d3.csv(dataPath, row => {
 			row.out = +row.out;
 			row.in = +row.in;
+			row.population = +row.population;
 			return row;
 		}).then(csv => {
 			this.data = csv;
@@ -87,30 +89,32 @@ class BarChart {
 		});
 	}
 
+
 	updateVisualization() {
 		if (!this.data) return;
 
-		const rankingType = this.currentRankingType;
+		const rankingType = this.immigration ? "in" : "out";
 
-		this.chartTitle
-			.transition()
-			.duration(500)
-			.style("opacity", 0.5)
-			.on("end", () => {
-				this.chartTitle
-					.text(rankingType === "in" ? "Top 5 in" : "Top 5 out")
-					.transition()
-					.duration(500)
-					.style("opacity", 1);
-			});
+		const processedData = this.percentage
+			? this.data.map(d => ({
+				...d,
+				value: d.population > 0 ? (d[rankingType] / d.population) * 100 : 0
+			}))
+			: this.data.map(d => ({
+				...d,
+				value: d[rankingType]
+			}));
 
-		this.data.sort((a, b) => b[rankingType] - a[rankingType]);
-		if (this.reverse) this.data.reverse();
-		const topData = this.data.slice(0, 5);
+		console.log("Processed data:", processedData);
+
+		processedData.sort((a, b) => b.value - a.value);
+
+		const topData = processedData.slice(0, 5);
 
 		this.y.domain(topData.map(d => d.city));
-		this.x.domain([0, d3.max(topData, d => d[rankingType])]);
+		this.x.domain([0, d3.max(topData, d => d.value)]);
 
+		// Update de balken
 		const bars = this.svg.selectAll(".bar").data(topData, d => d.city);
 
 		bars.enter()
@@ -121,13 +125,13 @@ class BarChart {
 			.attr("height", this.y.bandwidth())
 			.attr("width", 0)
 			.merge(bars)
-			.style("opacity", 0.5)
+			.style("opacity", 0.8)
 			.transition()
 			.duration(1000)
 			.style("opacity", 1)
 			.attr("x", 0)
 			.attr("y", d => this.y(d.city))
-			.attr("width", d => this.x(d[rankingType]));
+			.attr("width", d => this.x(d.value));
 
 		bars.exit()
 			.transition()
@@ -135,6 +139,7 @@ class BarChart {
 			.style("opacity", 0)
 			.remove();
 
+		// Update de labels
 		const labels = this.svg.selectAll(".label").data(topData, d => d.city);
 
 		labels.enter()
@@ -143,15 +148,14 @@ class BarChart {
 			.attr("x", 0)
 			.attr("y", d => this.y(d.city) + this.y.bandwidth() / 2 + 5)
 			.attr("text-anchor", "end")
-			.style("opacity", 0)
 			.merge(labels)
-			.style("opacity", 0.5)
+			.style("opacity", 0)
 			.transition()
 			.duration(1000)
-			.attr("x", d => this.x(d[rankingType]) - 5)
-			.attr("y", d => this.y(d.city) + this.y.bandwidth() / 2 + 5)
 			.style("opacity", 1)
-			.text(d => d[rankingType]);
+			.attr("x", d => this.x(d.value) - 5)
+			.attr("y", d => this.y(d.city) + this.y.bandwidth() / 2 + 5)
+			.text(d => this.percentage ? d.value.toFixed(2) : d[rankingType]);
 
 		labels.exit()
 			.transition()
@@ -166,5 +170,19 @@ class BarChart {
 			.selectAll(".tick text")
 			.attr("text-anchor", "start")
 			.attr("dx", "-6em");
+
+		// Update de titel
+		this.chartTitle
+			.transition()
+			.duration(500)
+			.style("opacity", 0.5)
+			.on("end", () => {
+				this.chartTitle
+					.text(this.immigration ? "Top 5 moving in from..." : "Top 5 moving out to...")
+					.transition()
+					.duration(500)
+					.style("opacity", 1);
+			});
 	}
+
 }

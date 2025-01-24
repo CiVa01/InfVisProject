@@ -1,9 +1,9 @@
-city,in,out
-Amsterdam,4366,4112
-Rotterdam,4671,2534
-Utrecht,880,3432
-Den Haag,3080,2085
-Eindhoven,3310,4075
-Nijmegen,1265,1087
-Arnhem,589,459
-Delft,852,654
+city,in,out,population
+Amsterdam,323,251,921402
+Rotterdam,140,122,664311
+Utrecht,375,255,367984
+Den Haag,142,89,549163
+Eindhoven,471,335,235691
+Nijmegen,190,215,177359
+Arnhem,81,58,162424
+Delft,42,39,103581
