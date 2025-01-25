@@ -31,7 +31,7 @@ class Network {
                     name: d.RegionFromName,
                 };
             }
-            ;
+
 
             // Create an edge object for the data entry
             const edge = {
