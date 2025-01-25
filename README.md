@@ -1,6 +1,6 @@
 # Final project Information Visualisation
 The repository for the final project of the Information Visualisation Masters course taught at the University of Utrecht. 
-By Rob den Besten, Cis & Floris Buchel
+By Rob den Besten, Cis van Aken & Floris Buchel
 
 **Domain selection**
 

@@ -7,13 +7,29 @@
 
 class network {
     constructor(data) {
+        this.data = data;
 
+        wrangleData();
     }
 
 
 }
 
 function wrangleData() {
-    //TODO
-    let net = this;
+    data = this.data;
+
+    //filter the data so all edges with no people moving between them, are thrown out.
+    let filteredData = data.filter(data => data.AmountOfPeople > 0)
+    console.log(filteredData);
+    //Create the network
+    const nodes = {};
+       const links = filteredData.map(d => {
+        // Ensure both RegionFromID and RegionToID exist as nodes
+        if (!nodes[d.RegionFromID]) {
+            nodes[d.RegionFromID] = { id: d.RegionFromID, name: d.RegionFromName };
+        }
+        if (!nodes[d.RegionToID]) {
+            nodes[d.RegionToID] = { id: d.RegionToID, name: d.RegionToName };
+        }
+    })
 }
