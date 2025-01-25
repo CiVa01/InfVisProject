@@ -6,28 +6,46 @@
 // CreateVis()
 
 class Network {
+    network = [];
+    regions = {};
+    data;
+
     constructor(data) {
         this.data = data;
-        console.log("data loaded to network: " + this.data);
-        wrangleData(this.data);
+        this.wrangleData();
     }
 
+    function
 
-}
+    wrangleData() {
+        //Create the network, start with initializing a set of nodes and a list of edges
+        const nodes = {};
+        let edges = [];
 
-function wrangleData(data) {
-    //filter the data so all edges with no people moving between them, are thrown out.
-    let filteredData = data.filter(data => data.AmountOfPeople > 0)
-    console.log(filteredData);
-    //Create the network
-    const nodes = {};
-       const links = filteredData.map(d => {
-        // Ensure both RegionFromID and RegionToID exist as nodes
-        if (!nodes[d.RegionFromID]) {
-            nodes[d.RegionFromID] = { id: d.RegionFromID, name: d.RegionFromName };
-        }
-        if (!nodes[d.RegionToID]) {
-            nodes[d.RegionToID] = { id: d.RegionToID, name: d.RegionToName };
-        }
-    })
+        // Loop over all the data once
+        data.forEach(d => {
+            //Check if the RegionFrom is already a node, if not, create a new node for it, containing the ID and name of the region
+            if (!nodes[d.RegionFromID]) {
+                nodes[d.RegionFromID] = {
+                    id: d.RegionFromID,
+                    name: d.RegionFromName,
+                };
+            }
+            ;
+
+            // Create an edge object for the data entry
+            const edge = {
+                source: d.RegionFromID,
+                target: d.RegionToID,
+                weight: d.AmountOfPeople
+            }
+
+            //push the edge to the network
+            edges.push(edge);
+        });
+
+        this.regions = nodes;
+        this.network = edges;
+    }
+
 }

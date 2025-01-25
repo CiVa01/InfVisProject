@@ -6,26 +6,30 @@ const svgContainer = document.getElementById('svgContainer');
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 // municipal data
-let data;
+var data;
 
 // Initialize data
 loadData();
 
-initVis();
 function loadData() {
-    d3.csv("/mainProjectFolder/data/data_final.csv", row => {
-        // Ensure AmountOfPeople is converted to an integer
-        row.AmountOfPeople = +row.AmountOfPeople;
-        return row;
-    }).then(csv => {
-        csv = csv.filter(data => data.AmountOfPeople > 0);
-        console.log("data file: ", csv);
-        data = csv; // Store the data
-    });
+    try {
+        d3.csv("/mainProjectFolder/data/data_final.csv", row => {
+            // Ensure AmountOfPeople is converted to an integer
+            row.AmountOfPeople = +row.AmountOfPeople;
+            return row;
+        }).then(csv => {
+            csv = csv.filter(data => data.AmountOfPeople > 0);
+            data = csv; // Store the data
+
+            initVis();
+        });
+        console.log("Loading data succeeded")
+    }catch (error){
+        console.error("Error while loading the data: " + error.message);
+    }
 }
 
 function initVis(){
-    initMap();
-    let net = new Network(data);
-    console.log("net: " + net);
+    let netData = new Network(data);
+    let netWork = netData.network;
 }
