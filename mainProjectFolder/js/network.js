@@ -5,19 +5,17 @@
 // WrangleData()
 // CreateVis()
 
-class network {
+class Network {
     constructor(data) {
         this.data = data;
-
-        wrangleData();
+        console.log("data loaded to network: " + this.data);
+        wrangleData(this.data);
     }
 
 
 }
 
-function wrangleData() {
-    data = this.data;
-
+function wrangleData(data) {
     //filter the data so all edges with no people moving between them, are thrown out.
     let filteredData = data.filter(data => data.AmountOfPeople > 0)
     console.log(filteredData);

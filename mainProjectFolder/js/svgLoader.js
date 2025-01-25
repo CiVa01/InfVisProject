@@ -1,26 +1,27 @@
 // svgLoader.js
 
 // Pad naar je externe SVG-bestand
-const svgPath = './data/Nederland_gemeenten_2021.svg';
+const svgPath = '/mainProjectFolder/data/Nederland_gemeenten_2021.svg';
 
 // Tooltip element
 const tooltip = document.getElementById('tooltip');
 
 // Laad het SVG-bestand
-fetch(svgPath)
-	.then(response => response.text())
-	.then(data => {
-		// Voeg de SVG toe aan de container
-		document.getElementById('svgContainer').innerHTML = data;
+function initMap() {
+	fetch(svgPath)
+		.then(response => response.text())
+		.then(data => {
+			// Voeg de SVG toe aan de container
+			document.getElementById('#chart-map').innerHTML = data;
 
-		// Selecteer alle paths binnen de geladen SVG
-		const paths = document.querySelectorAll('#svgContainer path');
+			// Selecteer alle paths binnen de geladen SVG
+			const paths = document.querySelectorAll('#chart-map path');
 
-		// Voeg eventlisteners toe aan paths
-		addEventListenersToPaths(paths);
-	})
-	.catch(error => console.error('Error bij het laden van de SVG:', error));
-
+			// Voeg eventlisteners toe aan paths
+			addEventListenersToPaths(paths);
+		})
+		.catch(error => console.error('Error bij het laden van de SVG:', error));
+}
 // Functie: Voeg eventlisteners toe aan alle paths
 function addEventListenersToPaths(paths) {
 	paths.forEach(path => {
