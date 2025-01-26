@@ -15,8 +15,6 @@ class Network {
         this.wrangleData();
     }
 
-    function
-
     wrangleData() {
         //Create the network, start with initializing a set of nodes and a list of edges
         const nodes = {};
