@@ -32,4 +32,20 @@ function loadData() {
 function initVis(){
     let netData = new Network(data);
     let netWork = netData.network;
+    let svgLoader = new svgLoader(netData.regions);
+    // todo: Get the map visualised in the correct box - CIS
+    svgLoader.initMap();
+
+    // todo: load in the default visualisation with explanations of how things work - TBA
+}
+
+function updateVis() {
+    //todo: Add listener that keeps track of how many municipalities are selected - TBA
+
+    //todo: update the network such that it displays the correct behaviour depending on the selected municipalities - TBA
+
+    //todo: if-statement deciding wether 0, 1 or more municipalities are selected - CIS
+        // If 0, display defaultVis()
+        // If 1, display oneVis()
+        // If >= 2, display the first municipality first and then add blocks for all subsequent municipalites
 }
