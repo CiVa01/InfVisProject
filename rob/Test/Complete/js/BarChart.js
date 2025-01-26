@@ -1,10 +1,10 @@
 class BarChart {
-	constructor({ container, width, height, dataPath, chartId }) {
+	constructor({ container, dataPath, chartId }) {
 		this.chartId = chartId; // Unique ID for this chart
 		this.container = container;
-		this.margin = { top: 40, right: 40, bottom: 15, left: 70 };
-		this.width = (width) - this.margin.left - this.margin.right;
-		this.height = (height) - this.margin.top - this.margin.bottom;
+		this.margin = { top: 40, right: 40, bottom: 15, left: 130 };
+		this.width = 400 - this.margin.left - this.margin.right;
+		this.height = 150 - this.margin.top - this.margin.bottom;
 
 		// Initialize properties
 		this.immigration = true; //
@@ -32,7 +32,7 @@ class BarChart {
 
 		this.chartTitle = this.svg.append("text")
 			.attr("class", "chart-title")
-			.attr("x", -65)
+			.attr("x", -90)
 			.attr("y", -15)
 			.text("");
 	}
