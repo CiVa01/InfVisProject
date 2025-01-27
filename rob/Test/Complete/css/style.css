@@ -52,10 +52,10 @@ h2 {
 
 .chart-area {
   background-color: #dadada;
-  padding: 10px;
+  padding: 15px;
   margin: 10px 0;
   width: 400px;
-  border-radius: 23px;
+  border-radius: 30px;
 }
 
 
@@ -89,6 +89,26 @@ button:hover {
   align-items: center; /* Vertically aligns the buttons if they have different heights */
 }
 
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* Knoppen links uitlijnen, kan worden aangepast */
+  gap: 10px; /* Optioneel: voeg wat ruimte toe tussen de knoppen */
+  /*margin-bottom: 10px; !* Optioneel: voeg wat ruimte toe onder de knoppen *!*/
+}
+
+.buttonTop, .buttonSort {
+  background-color: #f0f0f0; /* Pas de knopstijl aan naar wens */
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.buttonTop:hover, .buttonSort:hover {
+  background-color: #ddd; /* Hover effect */
+}
+
 .arrow {
   padding-top: -15px;  /* Adjust this value to move the arrow vertically */
   font-size: 16px;
@@ -104,3 +124,92 @@ button:hover {
   transform: rotate(180deg);
   transition: transform 0.3s ease;
 }
+
+/* Stijlen voor de informatiecontainer */
+#chart-information {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: block; /* Standaard zichtbaar */
+}
+
+/* Stijlen voor de grafiekcontainer */
+#chart-graph {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: block; /* Standaard zichtbaar */
+}
+
+/* Stijlen voor knoppen */
+.chart-toggle-button {
+  margin-top: 10px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: none;
+  background-color: #656565;
+  color: #000000;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+.chart-toggle-button:hover {
+  background-color: #515151;
+}
+
+/* General styles for the minimalistic dropdown */
+.minimal-dropdown {
+  -webkit-appearance: none;  /* Remove default browser styling */
+  -moz-appearance: none;
+  appearance: none;
+  padding: 5px 5px; /* Padding for better touch area */
+  font-size: 20px; /* Text size */
+  font-family: Arial, sans-serif; /* Simple, modern font */
+  background-color: #d9d9d9; /* Light gray background */
+  border: 1px solid #d8d8d8; /* Light border for a clean look */
+  border-radius: 37px; /* Rounded corners */
+  color: #333; /* Dark text color */
+  outline: none; /* Remove outline on focus */
+  cursor: pointer; /* Pointer cursor on hover */
+  width: 100%; /* Full width */
+  transition: all 0.3s ease; /* Smooth transition for changes */
+  font-weight: bolder;
+}
+
+/* Remove the default arrow and add custom styling */
+.minimal-dropdown::-ms-expand {
+  display: none; /* Remove dropdown arrow in IE */
+}
+
+/* Add custom arrow using pseudo-element */
+.minimal-dropdown::after {
+  content: '▼'; /* Downward arrow symbol */
+  font-size: 14px;
+  color: #333;
+  position: absolute;
+  top: 15px; /* Align the arrow */
+  right: 15px;
+  pointer-events: none; /* Prevent the arrow from being clickable */
+}
+
+/* Style the container to center the dropdown (optional) */
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.chart-title {
+  transform: translateX(-170px) translateY(-15px); /* Verplaats de titel naar links en boven */
+}
+
+.y-axis .tick text {
+  transform: translateX(-70px); /* Verplaats de tekst 10px naar links */
+}
+
+
+
+
