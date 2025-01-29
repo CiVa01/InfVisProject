@@ -1,13 +1,14 @@
-class svgLoader {
-	idList = {};
-	svgPath = './data/Nederland_gemeenten_2021.svg';
-	tooltip = document.getElementById('tooltip');
-
-	constructor(idList){
-		this.idList = idList;
+class SvgLoader {
+	constructor(idToNameMapping, url) {
+		this.idToNameMapping = idToNameMapping;
+		this.url = url;
 	}
 
-	initMap(){
-
+	loadMap(){
+		fetch(this.url)
+			.then(response => response.text)
+			.then(svgContent => )
 	}
+
+
 }

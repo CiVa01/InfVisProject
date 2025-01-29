@@ -13,7 +13,7 @@ var infoBlockCounter = 0
 
 // Initialize data
 loadData();
-
+initVis();
 function loadData() {
     try {
         d3.csv("/mainProjectFolder/data/data_final.csv", row => {
@@ -35,10 +35,9 @@ function loadData() {
 function initVis(){
     let netData = new Network(data);
     let netWork = netData.network;
-    let svgLoader = new svgLoader(netData.regions);
+    let svgLoader = new SvgLoader(netData.regions, './mainProjectFolder/data/Nederland_gemeenten_2021.svg');
     // todo: Get the map visualised in the correct box - CIS
-    svgLoader.initMap();
-
+    svgLoader.loadMap();
     // todo: load in the default visualisation with explanations of how things work - ROB
     let infoBlockInit = new infoBlock();
 

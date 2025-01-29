@@ -19,9 +19,8 @@ class Network {
         //Create the network, start with initializing a set of nodes and a list of edges
         const nodes = {};
         let edges = [];
-
         // Loop over all the data once
-        data.forEach(d => {
+        this.data.forEach(d => {
             //Check if the RegionFrom is already a node, if not, create a new node for it, containing the ID and name of the region
             if (!nodes[d.RegionFromID]) {
                 nodes[d.RegionFromID] = {
@@ -29,7 +28,6 @@ class Network {
                     name: d.RegionFromName,
                 };
             }
-
 
             // Create an edge object for the data entry
             const edge = {
