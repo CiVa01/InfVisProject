@@ -35,7 +35,7 @@ function loadData() {
 function initVis(){
     let netData = new Network(data);
     let netWork = netData.network;
-    let svgLoader = new SvgLoader(netData.regions, './data/Nederland_gemeenten_2021.svg');
+    let svgLoader = new SvgLoader(netData.regions, '/mainProjectFolder/data/Nederland_gemeenten_2021.svg');
     // todo: Get the map visualised in the correct box - CIS
     svgLoader.loadMap();
     // todo: load in the default visualisation with explanations of how things work - ROB
