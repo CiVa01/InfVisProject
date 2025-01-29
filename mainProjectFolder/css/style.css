@@ -54,17 +54,20 @@ body {
   background-color: #f4f4f9;
   color: #333;
 }
+
 header {
   background-color: #007bff;
   color: #fff;
   padding: 15px 20px;
   text-align: center;
 }
+
 nav {
   background-color: #0056b3;
   padding: 10px;
   text-align: center;
 }
+
 nav a {
   color: #fff;
   text-decoration: none;
@@ -74,24 +77,29 @@ nav a {
 nav a:hover {
   text-decoration: underline;
 }
+
 main {
   padding: 20px;
 }
+
 section {
   margin-bottom: 20px;
 }
+
 h1 {
   color: #ffffff;
 }
+
 h2 {
   color: #0056b3;
 }
+
 .chart-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
   margin-top: 20px;
 }
+
 .chart {
   border: 1px solid #ccc;
   border-radius: 8px;
