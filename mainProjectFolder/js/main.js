@@ -8,6 +8,9 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
 // municipal data
 var data;
 
+// counter for infoBlocks
+var infoBlockCounter = 0
+
 // Initialize data
 loadData();
 
@@ -36,7 +39,10 @@ function initVis(){
     // todo: Get the map visualised in the correct box - CIS
     svgLoader.initMap();
 
-    // todo: load in the default visualisation with explanations of how things work - TBA
+    // todo: load in the default visualisation with explanations of how things work - ROB
+    let infoBlockInit = new infoBlock();
+
+    infoBlockInit.make()
 }
 
 function updateVis() {
@@ -49,3 +55,5 @@ function updateVis() {
         // If 1, display oneVis()
         // If >= 2, display the first municipality first and then add blocks for all subsequent municipalites
 }
+
+document.getElementById("infoButton").addEventListener("click", initVis);

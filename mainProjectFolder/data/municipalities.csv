@@ -1,0 +1,335 @@
+city,population
+Aa en Hunze,59500
+Aalsmeer,34190
+Aalten,32750
+Achtkarspelen,56300
+Alblasserdam,20400
+Albrandswaard,44500
+Alkmaar,108000
+Almelo,77600
+Almere,215000
+Alphen aan den Rijn,111000
+Alphen-Chaam,23000
+Altena,62900
+Ameland,35100
+Amersfoort,158000
+Amstelveen,92500
+Amsterdam,891000
+Apeldoorn,163000
+Arnhem,159000
+Assen,67800
+Asten,17100
+Baarle-Nassau,11700
+Baarn,33500
+Barendrecht,48000
+Barneveld,59000
+Beek,16400
+Beekdaelen,33000
+Beesel,18000
+Berg en Dal,35500
+Bergeijk,29000
+Bergen (L.),36500
+Bergen (NH.),32000
+Bergen op Zoom,67000
+Berkelland,44800
+Bernheze,30000
+Best,30000
+Beuningen,31500
+Beverwijk,43000
+Bilt De,100000
+Bladel,20000
+Blaricum,21000
+Bloemendaal,39000
+Bodegraven-Reeuwijk,61000
+Boekel,22000
+Borger-Odoorn,38000
+Borne,23000
+Borsele,24000
+Boxtel,42000
+Breda,185000
+Bronckhorst,42000
+Brummen,21000
+Brunssum,30000
+Bunnik,19000
+Bunschoten,22500
+Buren,20000
+Capelle aan den IJssel,66000
+Castricum,38000
+Coevorden,37000
+Cranendonck,31000
+Culemborg,29000
+Dalfsen,32000
+Dantumadiel,20000
+Delft,105000
+Deurne,36000
+Deventer,100000
+Diemen,25000
+Dinkelland,37000
+Doesburg,22000
+Doetinchem,57000
+Dongen,25000
+Dordrecht,120000
+Drechterland,37000
+Drimmelen,32000
+Dronten,42000
+Druten,26000
+Duiven,31000
+Echt-Susteren,50000
+Edam-Volendam,37000
+Ede,115000
+Eemnes,9500
+Eemsdelta,28000
+Eersel,22000
+Eijsden-Margraten,21000
+Eindhoven,234000
+Elburg,24000
+Emmen,109000
+Enkhuizen,19000
+Enschede,160000
+Epe,35000
+Ermelo,29000
+Etten-Leur,46000
+Fryske Marren De,110000
+Geertruidenberg,25000
+Geldrop-Mierlo,60000
+Gemert-Bakel,55000
+Gennep,18000
+Gilze en Rijen,27000
+Goeree-Overflakkee,53000
+Goes,37000
+Goirle,26000
+Gooise Meren,93000
+Gorinchem,37000
+Gouda,75000
+Gravenhage 's-,550000
+Groningen,230000
+Gulpen-Wittem,32000
+Haaksbergen,29000
+Haarlem,165000
+Haarlemmermeer,160000
+Halderberge,26000
+Hardenberg,59000
+Harderwijk,46000
+Hardinxveld-Giessendam,26000
+Harlingen,16000
+Hattem,12000
+Heemskerk,35000
+Heemstede,29000
+Heerde,22000
+Heerenveen,50000
+Heerlen,87000
+Heeze-Leende,27000
+Heiloo,22000
+Helder Den,55000
+Hellendoorn,35000
+Helmond,96000
+Hendrik-Ido-Ambacht,30000
+Hengelo,80000
+Hertogenbosch 's-,155000
+Heumen,18000
+Heusden,47000
+Hillegom,20000
+Hilvarenbeek,23000
+Hilversum,93000
+Hoeksche-Waard,49000
+Hof van Twente,35000
+Hogeland-Het,60000
+Hollands Kroon,50000
+Hoogeveen,57000
+Hoorn,75000
+Horst aan de Maas,43000
+Houten,50000
+Huizen,42000
+Hulst,27000
+IJsselstein,35000
+Kaag,3000
+Kampen,55000
+Kapelle,19000
+Katwijk,67000
+Kerkrade,47000
+Koggenland,26000
+Krimpen aan den IJssel,29000
+Krimpenerwaard,51000
+Laarbeek,22000
+Landgraaf,39000
+Landsmeer,20000
+Lansingerland,60000
+Laren,11000
+Leeuwarden,130000
+Leiden,125000
+Leiderdorp,23000
+Leidschendam-Voorburg,75000
+Lelystad,80000
+Leudal,29000
+Leusden,24000
+Lingewaard,48000
+Lisse,23000
+Lochem,34000
+Loon op Zand,23000
+Lopik,20000
+Losser,25000
+Maasdriel,38000
+Maasgouw,37000
+Maassluis,35000
+Maastricht,122000
+Medemblik,29000
+Meerssen,23000
+Meierijstad,125000
+Meppel,32000
+Middelburg,48000
+Midden-Delfland,24000
+Midden-Drenthe,34000
+Midden-Groningen,58000
+Moerdijk,38000
+Molenlanden,40000
+Montferland,32000
+Montfoort,18000
+Mook en Middelaar,17000
+Neder-Betuwe,32000
+Nederweert,17000
+Nieuwegein,70000
+Nieuwkoop,25000
+Nijkerk,34000
+Nijmegen,180000
+Nissewaard,120000
+Noardeast-Fryslân,47000
+Noord-Beveland,22000
+Noordenveld,29000
+Noordoostpolder,45000
+Noordwijk,43000
+Nuenen Gerwen en Nederwetten,24000
+Nunspeet,21000
+Oegstgeest,23000
+Oirschot,22000
+Oisterwijk,25000
+Oldambt,58000
+Oldebroek,23000
+Oldenzaal,18000
+Olst-Wijhe,23000
+Ommen,18000
+Oost Gelre,47000
+Oosterhout,57000
+Ooststellingwerf,23000
+Oostzaan,19000
+Opmeer,22000
+Opsterland,27000
+Oss,160000
+Oude IJsselstreek,58000
+Ouder-Amstel,29000
+Oudewater,21000
+Overbetuwe,46000
+Papendrecht,30000
+Peel en Maas,55000
+Pekela,20000
+Pijnacker-Nootdorp,55000
+Purmerend,92000
+Putten,24000
+Raalte,38000
+Reimerswaal,23000
+Renkum,31000
+Renswoude,15000
+Reusel-De Mierden,17000
+Rheden,49000
+Rhenen,25000
+Ridderkerk,46000
+Rijssen-Holten,42000
+Rijswijk,56000
+Roerdalen,22000
+Roermond,59000
+Ronde Venen De,32000
+Roosendaal,79000
+Rotterdam,663000
+Rozendaal,19000
+Rucphen,23000
+Schagen,54000
+Scherpenzeel,15000
+Schiedam,77000
+Schiermonnikoog,950
+Schouwen-Duiveland,39000
+Simpelveld,14000
+Sint-Michielsgestel,28000
+Sittard-Geleen,94000
+Sliedrecht,25000
+Sluis,22000
+Smallingerland,55000
+Soest,48000
+Someren,22000
+Son en Breugel,23000
+Stadskanaal,32000
+Staphorst,24000
+Stede Broec,22000
+Steenbergen,25000
+Steenwijkerland,34000
+Stein,25000
+Stichtse Vecht,67000
+Sudwest-Fryslan,42000
+Terneuzen,55000
+Terschelling,23000
+Texel,18000
+Teylingen,47000
+Tholen,24000
+Tiel,43000
+Tilburg,220000
+Tubbergen,23000
+Twenterand,36000
+Tynaarlo,27000
+Tytsjerksteradiel,24000
+Uitgeest,21000
+Uithoorn,27000
+Urk,20000
+Utrecht,355000
+Utrechtse Heuvelrug,48000
+Vaals,37000
+Valkenburg aan de Geul,35000
+Valkenswaard,55000
+Veendam,35000
+Veenendaal,65000
+Veere,22000
+Veldhoven,72000
+Velsen,67000
+Venlo,100000
+Venray,47000
+Vijfheerenlanden,41000
+Vlaardingen,62000
+Vlieland,3500
+Vlissingen,44000
+Voerendaal,17000
+Voorschoten,24000
+Voorst,15000
+Vught,30000
+Waadhoeke,19000
+Waalre,20000
+Waalwijk,45000
+Waddinxveen,29000
+Wageningen,39000
+Wassenaar,27000
+Waterland,35000
+Weert,52000
+West Betuwe,54000
+West Maas en Waal,27000
+Westerkwartier,33000
+Westerveld,26000
+Westervoort,26000
+Westerwolde,21000
+Westland,110000
+Weststellingwerf,26000
+Wierden,30000
+Wijchen,46000
+Wijdemeren,21000
+Wijk bij Duurstede,23000
+Winterswijk,31000
+Woensdrecht,24000
+Woerden,39000
+Wolden De,24000
+Zaanstad,157000
+Zaltbommel,27000
+Zandvoort,20000
+Zeewolde,22000
+Zevenaar,43000
+Zeist,66000
+Zeker,55000
+Zuidplas,42000
+Zundert,33000
+Zutphen,48000
+Zwijndrecht,45000
+Zwolle,130000
