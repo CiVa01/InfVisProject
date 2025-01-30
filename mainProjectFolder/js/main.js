@@ -63,6 +63,7 @@ function updateVis() {
         network.stop();
         // defaultVis.show();
     }else if(selection.length == 1){
+        network.stop();
         // infoBlockInit.show(selection)
         network.showOne(svgLoader);
     }else{

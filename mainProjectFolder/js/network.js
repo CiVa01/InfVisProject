@@ -49,7 +49,7 @@ class Network {
         let id = path.getAttribute('id');
 
         let edges = this.network.filter(edge => edge.source === id);
-        console.log(edges);
+
         let targetIds = new Set(edges.map(edge => edge.target));
         let allPaths = Array.from(svgLoader.allPaths);
         allPaths = allPaths.filter(p => targetIds.has(p.getAttribute('id')));
@@ -84,8 +84,8 @@ class Network {
                 let targetY = targetBBox.y + targetBBox.height / 2;
 
                 // Calculate animation speed based on weight
-                let speed = Math.max(0.5, 5 / edge.weight);
-
+                let speed = Math.max(0.5, 2000 / edge.weight);
+                console.log(speed);
                 // Draw the line with a dashed stroke
                 let line = g.append("line")
                     .attr("x1", sourceX)
@@ -94,8 +94,8 @@ class Network {
                     .attr("y2", targetY) // Same for Y
                     .attr("stroke", "black")
                     .attr("stroke-dasharray", "5,5")
-                    .attr("stroke-width", 2)
-                    .attr("opacity", function () {return Math.max(0.1, Math.min(1, 1 / edge.weight));})
+                    .attr("stroke-width", 5)
+                    .attr("opacity", function () {return Math.max(0.5, 1/edge.weight);})
                     .style("pointer-events", "none");
 
                 // Calculate the line length using Pythagorean theorem (distance between source and target)
@@ -104,19 +104,102 @@ class Network {
                 // Initially, set the stroke-dashoffset to the full line length, so the dashes are hidden
                 line.attr("stroke-dashoffset", lineLength)
                     .transition()
-                    .duration(speed * 1000) // Adjust speed dynamically based on edge weight
+                    .duration(speed * 50) // Adjust speed dynamically based on edge weight
                     .ease(d3.easeLinear)
-                    .attr("stroke-dashoffset", 0); // Animate the dashoffset to 0, which reveals the moving dashes
+                    .attr("stroke-dashoffset", 0)
+                    .on("end", function repeat() {
+                        // Restart the animation after it ends to create a continuous effect
+                        d3.select(this)
+                            .attr("stroke-dashoffset", lineLength)
+                            .transition()
+                            .duration(speed * 50)
+                            .ease(d3.easeLinear)
+                            .attr("stroke-dashoffset", 0)
+                            .on("end", repeat); // Loop the transition again after it completes
+                    }); // Animate the dashoffset to 0, which reveals the moving dashes
             }
         });
     }
 
-    showMore(svgLoader){
-        // Identfi
-        let path = svgLoader.selectedPaths[0];
-        let id = path.getAttribute('id');
+    showMore(svgLoader) {
+        let sourcePath = svgLoader.selectedPaths[0];
+        let id = sourcePath.getAttribute('id');
 
+        let targetPaths = svgLoader.selectedPaths.slice(1);
+        let svg = d3.select(sourcePath.closest("svg"));
+        let g = svg.append("g").attr("id", "network-lines");
 
+        let sourceBBox = sourcePath.getBBox();
+        let sourceX = sourceBBox.x + sourceBBox.width / 2;
+        let sourceY = sourceBBox.y + sourceBBox.height / 2;
+
+        g.append("circle")
+            .attr("cx", sourceX)
+            .attr("cy", sourceY)
+            .attr("r", 5)
+            .attr("fill", "blue")
+            .attr("opacity", "0.6")
+            .style("pointer-events", "none");
+
+        targetPaths.forEach(targetPath => {
+            let targetId = targetPath.getAttribute('id');
+            let targetBBox = targetPath.getBBox();
+            let targetX = targetBBox.x + targetBBox.width / 2;
+            let targetY = targetBBox.y + targetBBox.height / 2;
+
+            let edgeToTarget = this.network.find(e => e.source === id && e.target === targetId);
+            if(edgeToTarget) {
+                let speedToTarget = Math.max(0.5, 2000 / edgeToTarget.weight);
+
+                let controlX1 = (sourceX + targetX) / 2;
+                let controlY1 = Math.min(sourceY, targetY) - 40;
+
+                let pathOutward = g.append("path")
+                    .attr("d", `M${sourceX},${sourceY} Q${controlX1},${controlY1} ${targetX},${targetY}`)
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 2)
+                    .attr("fill", "none")
+                    .attr("fill-opacity", 0)
+                    .attr("stroke-dasharray", "5,5")
+                    .attr("opacity", function () {return Math.max(0.5, 1/edgeToTarget.weight);})
+                    .attr("stroke-linecap", "round")
+                    .style("pointer-events", "none");
+
+                animateDashedLine(pathOutward, speedToTarget);
+            }
+
+            let edgeToSource = this.network.find(e => e.source === targetId && e.target === id);
+            if (edgeToSource) {
+                let speedToSource = Math.max(0.5, 2000 / edgeToSource.weight);
+
+                let controlX2 = (sourceX + targetX) / 2;
+                let controlY2 = Math.max(sourceY, targetY) + 40;
+
+                let pathReturn = g.append("path")
+                    .attr("d", `M${targetX},${targetY} Q${controlX2},${controlY2} ${sourceX},${sourceY}`)
+                    .attr("stroke", "red")
+                    .attr("stroke-width", 2)
+                    .attr("fill", "none")
+                    .attr("fill-opacity", 0)
+                    .attr("stroke-dasharray", "5,5")
+                    .attr("opacity", function () {return Math.max(0.5, 1/edgeToSource.weight);})
+                    .attr("stroke-linecap", "round")
+                    .style("pointer-events", "none");
+
+                animateDashedLine(pathReturn, speedToSource);
+            }
+        });
+
+        function animateDashedLine(path, speed) {
+            let totalLength = path.node().getTotalLength();
+            path.attr("stroke-dasharray", totalLength + " " + totalLength)
+                .attr("stroke-dashoffset", totalLength)
+                .transition()
+                .duration(speed) // Weight now controls speed correctly
+                .ease(d3.easeLinear)
+                .attr("stroke-dashoffset", 0)
+                .on("end", () => animateDashedLine(path, speed)); // Continuous animation
+        }
     }
 
     stop() {
