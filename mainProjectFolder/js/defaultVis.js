@@ -5,7 +5,14 @@
 // Separate SVG block with basic information
 
 class defaultVis {
+
+    // Constructor can stay empty I think, all functionality is cointained and does not need external contact
     constructor() {
-        this.data = data;
+
+    }
+
+    // When no municipalities are selected, show a block with explanations of the visualisation
+    show(){
+
     }
 }
