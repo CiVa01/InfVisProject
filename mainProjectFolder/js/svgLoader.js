@@ -6,7 +6,7 @@ class SvgLoader {
 		this.tooltip = document.getElementById('tooltip');
 	}
 
-	loadMap(){
+	loadMap() {
 		fetch(this.url)
 			.then(response => response.text())
 			.then(data => {
@@ -37,7 +37,7 @@ class SvgLoader {
 			const bbox = path.getBoundingClientRect();
 
 			// Tooltip tekst instellen
-			this.tooltip.textContent = getNameFromId(id);
+			this.tooltip.textContent = this.getNameFromId(id);
 			this.tooltip.style.display = 'block';
 
 			// Dynamische positie instellen
@@ -69,11 +69,14 @@ class SvgLoader {
 		return this.selectedPaths.map(path => path.getAttribute('id')); // Return an array of path IDs
 	}
 
-}
-
-function getNameFromId(id) {
-	console.log(idToNameMapping.get(id));
-	console.log()
-	let name = idToNameMapping.get(id).name;
-	return name; // Als de ID niet bestaat in de mapping, geef de ID zelf terug
+testing
+	getNameFromId(id) {
+		let nameObject = this.idToNameMapping[id]; // Access the object using bracket notation
+		if (nameObject) {
+			console.log(nameObject.name);
+			return nameObject.name;
+		}
+		console.log("ID not found:", id);
+		return id; // Return the ID itself if not found
+	}
 }
