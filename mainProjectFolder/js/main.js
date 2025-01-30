@@ -45,10 +45,11 @@ function initVis(){
     network = new Network(data);
     svgLoader = new SvgLoader(network.regions, '/mainProjectFolder/data/Nederland_gemeenten_2021.svg');
     svgLoader.loadMap();
+
     // todo: load in the default visualisation with explanations of how things work - ROB
-    // let defaultVis = new defaultVis();
-    let infoBlockInit = new infoBlock();
-    infoBlockInit.make()
+    // Initialize the main infoBlock
+    let infoBlockMain = new infoBlock('main');
+    infoBlockMain.init()
 }
 
 function updateVis() {

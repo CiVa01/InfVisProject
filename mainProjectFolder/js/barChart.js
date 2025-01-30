@@ -2,9 +2,9 @@ class barChart {
 	constructor({ container, data, chartId }) {
 		this.container = container;
 		this.chartId = chartId; // Unique identifier for this chart
-		this.margin = { top: 40, right: 40, bottom: 15, left: 170 };
-		this.width = 400 - this.margin.left - this.margin.right;
-		this.height = 190 - this.margin.top - this.margin.bottom;
+		this.margin = { top: 40, right: 0, bottom: 0, left: 130 };
+		this.width = 276 - this.margin.left - this.margin.right;
+		this.height = 150 - this.margin.top - this.margin.bottom;
 
 		// Initialize properties
 		this.immigration = true; // Default to peopleTo
@@ -40,19 +40,17 @@ class barChart {
 
 	createButtons() {
 		const buttonHtml = `
-        <div class="button-container">
             <button type="button" class="buttonTop" id="toggle-ranking-${this.chartId}">
                 <span class="arrow">↥</span>
             </button>
             <button type="button" class="buttonSort" id="change-sorting-${this.chartId}">
                 %
-            </button>
-        </div>
-    `;
+            </button>`;
 
 		d3.select(this.container)
 			.append("div")
 			.attr("id", `button-div-${this.chartId}`)
+			.attr("class", "buttonGraph")
 			.html(buttonHtml);
 	}
 
@@ -168,6 +166,9 @@ class barChart {
 				const maxLength = 18;
 				const text = d.toString();
 				return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+			})
+			.each(function(d) {
+				d3.select(this).style("transform", `translateX(-43px)`);
 			});
 
 		// Update chart title
