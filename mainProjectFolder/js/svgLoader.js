@@ -69,6 +69,7 @@ class SvgLoader {
 		return this.selectedPaths.map(path => path.getAttribute('id')); // Return an array of path IDs
 	}
 
+testing
 	getNameFromId(id) {
 		let nameObject = this.idToNameMapping[id]; // Access the object using bracket notation
 		if (nameObject) {
