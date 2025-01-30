@@ -5,8 +5,8 @@ const svgContainer = document.getElementById('svgContainer');
 // SVG namespace
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
-document.getElementById("infoButton").addEventListener("click", updateVis);
 document.getElementById("svgContainer").addEventListener("click", updateVis);
+//document.getElementById("infoButton").addEventListener("click", updateVis);
 // Create a global object for the SVG
 let svgLoader;
 

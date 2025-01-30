@@ -49,6 +49,10 @@ class Network {
         let id = path.getAttribute('id');
 
         let edges = this.network.filter(edge => edge.source === id);
+        edges.sort((a, b) => b.weight - a.weight);
+
+        // Only show lines to the 10 most popular destinations
+        edges = edges.slice(0, 10);
 
         let targetIds = new Set(edges.map(edge => edge.target));
         let allPaths = Array.from(svgLoader.allPaths);
@@ -85,7 +89,7 @@ class Network {
 
                 // Calculate animation speed based on weight
                 let speed = Math.max(0.5, 2000 / edge.weight);
-                console.log(speed);
+
                 // Draw the line with a dashed stroke
                 let line = g.append("line")
                     .attr("x1", sourceX)
