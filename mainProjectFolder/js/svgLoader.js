@@ -6,7 +6,7 @@ class SvgLoader {
 		this.tooltip = document.getElementById('tooltip');
 	}
 
-	loadMap() {
+	loadMap(){
 		fetch(this.url)
 			.then(response => response.text())
 			.then(data => {
