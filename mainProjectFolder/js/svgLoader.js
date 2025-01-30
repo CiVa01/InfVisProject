@@ -1,10 +1,9 @@
 class SvgLoader {
-
-	tooltip = document.getElementById('tooltip');
 	constructor(idToNameMapping, url) {
 		this.idToNameMapping = idToNameMapping;
 		this.url = url;
-		console.log(url);
+		this.selectedPaths = []; // Store clicked paths
+		this.tooltip = document.getElementById('tooltip');
 	}
 
 	loadMap(){
@@ -24,9 +23,9 @@ class SvgLoader {
 
 	addEventListenersToPaths(paths) {
 		paths.forEach(path => {
-			path.addEventListener('mouseover', this.handleMouseOver);
-			path.addEventListener('mouseout', this.handleMouseOut);
-			path.addEventListener('click', this.handleClick);
+			path.addEventListener('mouseover', this.handleMouseOver.bind(this));
+			path.addEventListener('mouseout', this.handleMouseOut.bind(this));
+			path.addEventListener('click', this.handleClick.bind(this));
 		});
 	}
 
@@ -48,20 +47,29 @@ class SvgLoader {
 	}
 
 	handleMouseOut() {
-	tooltip.style.display = 'none';
-}
+		this.tooltip.style.display = 'none';
+	}
 
 	handleClick(event) {
 		const path = event.target;
-
 		path.classList.toggle('clicked');
-		const index = clickedPaths.indexOf(path);
+
+		const index = this.selectedPaths.indexOf(path);
 
 		if (index === -1) {
-			clickedPaths.push(path);
+			this.selectedPaths.push(path);
 		} else {
-			clickedPaths.splice(index, 1);
+			this.selectedPaths.splice(index, 1);
 		}
-
 	}
+
+	// Method to get the list of selected paths
+	getSelectedPaths() {
+		return this.selectedPaths.map(path => path.getAttribute('id')); // Return an array of path IDs
+	}
+
+}
+
+function getNameFromId(id) {
+	return this.idToNameMapping[id] || id; // Als de ID niet bestaat in de mapping, geef de ID zelf terug
 }
