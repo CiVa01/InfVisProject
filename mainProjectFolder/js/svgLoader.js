@@ -65,11 +65,13 @@ class SvgLoader {
 
 	// Method to get the list of selected paths
 	getSelectedPaths() {
+		console.log("fetching paths");
 		return this.selectedPaths.map(path => path.getAttribute('id')); // Return an array of path IDs
 	}
 
 }
 
 function getNameFromId(id) {
-	return this.idToNameMapping[id] || id; // Als de ID niet bestaat in de mapping, geef de ID zelf terug
+	let name = idToNameMapping.get(id).name;
+	return name; // Als de ID niet bestaat in de mapping, geef de ID zelf terug
 }
