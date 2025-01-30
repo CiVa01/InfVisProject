@@ -76,6 +76,9 @@ class Network {
             .attr("opacity", "0.6")
             .style("pointer-events", "none");
 
+        // Calculate the total outgoing weight
+        let totalWeight = edges.reduce((sum, edge) => sum + edge.weight, 0);
+
         // Loop through each edge and draw a line
         edges.forEach(edge => {
             let targetid = edge.target;
@@ -88,7 +91,7 @@ class Network {
                 let targetY = targetBBox.y + targetBBox.height / 2;
 
                 // Calculate animation speed based on weight
-                let speed = Math.max(0.5, 2000 / edge.weight);
+                let speed = (edge.weight / totalWeight) * 1000;
 
                 // Draw the line with a dashed stroke
                 let line = g.append("line")
@@ -153,7 +156,7 @@ class Network {
 
             let edgeToTarget = this.network.find(e => e.source === id && e.target === targetId);
             if(edgeToTarget) {
-                let speedToTarget = Math.max(0.5, 2000 / edgeToTarget.weight);
+                let speedToTarget = Math.max(0.5, 200000 / edgeToTarget.weight);
 
                 let controlX1 = (sourceX + targetX) / 2;
                 let controlY1 = Math.min(sourceY, targetY) - 40;
@@ -161,7 +164,7 @@ class Network {
                 let pathOutward = g.append("path")
                     .attr("d", `M${sourceX},${sourceY} Q${controlX1},${controlY1} ${targetX},${targetY}`)
                     .attr("stroke", "black")
-                    .attr("stroke-width", 2)
+                    .attr("stroke-width", 10)
                     .attr("fill", "none")
                     .attr("fill-opacity", 0)
                     .attr("stroke-dasharray", "5,5")
@@ -174,7 +177,7 @@ class Network {
 
             let edgeToSource = this.network.find(e => e.source === targetId && e.target === id);
             if (edgeToSource) {
-                let speedToSource = Math.max(0.5, 2000 / edgeToSource.weight);
+                let speedToSource = Math.max(0.5, 20000 / edgeToSource.weight);
 
                 let controlX2 = (sourceX + targetX) / 2;
                 let controlY2 = Math.max(sourceY, targetY) + 40;
@@ -182,7 +185,7 @@ class Network {
                 let pathReturn = g.append("path")
                     .attr("d", `M${targetX},${targetY} Q${controlX2},${controlY2} ${sourceX},${sourceY}`)
                     .attr("stroke", "red")
-                    .attr("stroke-width", 2)
+                    .attr("stroke-width", 10)
                     .attr("fill", "none")
                     .attr("fill-opacity", 0)
                     .attr("stroke-dasharray", "5,5")
