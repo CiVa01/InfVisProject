@@ -1,19 +1,118 @@
-#infoBlockContainer{
-    background: #cccccc;
-    border-radius: 20px;
+#mainInfoBlockContainer{
+    background: #d8d8d8;
+    border-radius: 30px;
     padding: 15px;
+    min-width: 306px;
 }
 
+#button-div-main {
+    display: flex;
+    justify-content: flex-end;
+}
 
 .button-container {
-    float: right;
+    display: flex;
+    justify-content: flex-end;
 }
 
 
+table.city-data {
+    width: 100%;
+}
 table.city-data td:first-child {
+    width: 45%;
     color: #7c7c7c;
 }
 
-table.city-data td.bold {
-    color: #000000;
+.y-data {
+    fill: none;
+    stroke: rgba(51, 51, 51, 0);
+    shape-rendering: crispEdges;
+}
+
+.y-axis .tick text {
+    color: #7c7c7c;
+    font: 14px "Arial";
+}
+
+.buttonGraph {
+    padding-top: 15px;
+}
+
+.expandButton {
+    margin-left: auto;
+    margin-right: 0;
+    display: block;
+}
+
+.buttonTop, .buttonSort {
+    margin-left: 15px;
+}
+
+button{
+    width: 30px; /* Stel de breedte in */
+    height: 30px; /* Stel de hoogte in */
+    border-radius: 50%; /* Zorg ervoor dat de knop rond is */
+    border: none; /* Verwijder de rand */
+    background-color: #e6e6e6; /* Primaire knopkleur */
+    color: #000000; /* Kleur van de tekst of icon */
+    display: flex; /* Zorg ervoor dat de inhoud goed wordt gecentreerd */
+    align-items: center; /* Verticaal centreren */
+    justify-content: center; /* Horizontaal centreren */
+    cursor: pointer; /* Maak de cursor een pointer */
+    transition: background-color 0.3s ease; /* Animatie voor hover */
+}
+
+button:hover {
+    background-color: #a1a1a1; /* Donkerdere kleur bij hover */
+}
+
+.buttonSort.active {
+    background-color: #7a7a7a; /* Donkere kleur voor de knop */
+    color: white;            /* Tekstkleur wit */
+}
+
+.arrow {
+    padding-top: -15px;  /* Adjust this value to move the arrow vertically */
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+.arrow.active {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
+.arrow-up {
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+.arrow-down {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
+
+
+/* General styles for the minimalistic dropdown */
+.minimal-dropdown {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    background-color: #d9d9d9;
+    border: 1px solid #d8d8d8;
+    border-radius: 30px;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    font-weight: bolder;
 }

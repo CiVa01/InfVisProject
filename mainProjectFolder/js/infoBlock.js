@@ -1,7 +1,7 @@
 class infoBlock {
 	constructor(chartId) {
 		this.chartId = chartId;
-		this.container = "#infoBlockContainer";
+		this.container = "#mainInfoBlockContainer";
 		this.optionsData = []; // Om de optiesData op te slaan
 	}
 
@@ -34,7 +34,7 @@ class infoBlock {
 
 		// Add default option with placeholder text
 		const defaultOption = document.createElement("option");
-		defaultOption.textContent = "Click here to select a municipality...";
+		defaultOption.textContent = "Select a municipality...";
 		defaultOption.value = ""; // Empty value to indicate no selection
 		defaultOption.disabled = true; // Make sure this option cannot be selected
 		defaultOption.selected = true; // Make this the default selected option
@@ -130,98 +130,76 @@ class infoBlock {
 		};
 
 		// Create or update the display for the selected city's data
-		this.displayCityData(selectedData);
+		this.displayData(selectedData);
 	}
 
 
-	displayCityData(cityData) {
-		console.log(cityData);
+	displayData(cityData) {
+		// Find the information container and clear its contents
+		let informationContainer = document.getElementById(this.chartId + "-information");
 
-		let cityDataContainer = document.getElementById(this.chartId + "-information");
-		let toggleButton = document.getElementById(this.chartId + "-toggle");
+		if (!informationContainer) {
+			informationContainer = document.createElement("div");
+			informationContainer.id = this.chartId + "-information"; // Unique ID for this display container
+			document.querySelector(this.container).appendChild(informationContainer);
+		} else {
+			// Clear the contents of the information container
+			informationContainer.innerHTML = '';
+		}
+
+		// Update the information container with the new data
+		informationContainer.innerHTML = `
+    <table class="city-data">
+        <tr>
+            <td>Total coming in</td>
+            <td class="bold">${cityData.totals.totalPeopleTo}</td>
+        </tr>
+        <tr>
+            <td>Total going out</td>
+            <td class="bold">${cityData.totals.totalPeopleFrom}</td>
+        </tr>
+        <tr>
+            <td>Population</td>
+            <td class="bold">${cityData.totals.population}</td>
+        </tr>
+    </table>`;
+
+		// Create the toggle button
+		let toggleButton = document.createElement("button");
+		toggleButton.id = this.chartId + "-toggle";
+		toggleButton.textContent = '^'; // Button text
+		toggleButton.className = 'expandButton';
+		toggleButton.style.marginTop = "10px";
+		informationContainer.appendChild(toggleButton); // Append the button to the button container
+
+		// Find the graph container and clear its contents
 		let graphContainer = document.getElementById(this.chartId + "-graph-container");
-		let buttonContainer = document.getElementById(this.chartId + "-button-container");
 
-		// If the container doesn't exist, create it
-		if (!cityDataContainer) {
-			cityDataContainer = document.createElement("div");
-			cityDataContainer.id = this.chartId + "-information"; // Unique ID for this display container
-			document.querySelector(this.container).appendChild(cityDataContainer);
-		}
-
-		// If the button container doesn't exist, create it
-		if (!buttonContainer) {
-			buttonContainer = document.createElement("div");
-			buttonContainer.id = this.chartId + "-button-container"; // Unique ID for the button container
-			buttonContainer.classList.add("button-container"); // Add the class for styling
-			document.querySelector(this.container).appendChild(buttonContainer);
-		}
-
-		// If the toggle button doesn't exist, create it
-		if (!toggleButton) {
-			// Create the button container
-			const buttonContainer = document.createElement("div");
-			buttonContainer.classList.add("button-container"); // Add the class to the container
-			document.querySelector(this.container).appendChild(buttonContainer);
-
-			// Create the toggle button
-			toggleButton = document.createElement("button");
-			toggleButton.id = this.chartId + "-toggle"; // Unique ID for the toggle button
-			toggleButton.textContent =  '^'; // Button text
-			toggleButton.className = 'arrow';
-			toggleButton.style.marginTop = "10px";
-			toggleButton.classList.add("expandButton"); // Add the expandButton class to the button
-			buttonContainer.appendChild(toggleButton); // Append the button to the button container
-
-			// Add event listener for the toggle button
-			toggleButton.addEventListener("click", () => {
-				// Toggle the 'active' class on the button to switch between active and inactive states
-				toggleButton.classList.toggle("active");
-
-				const isHidden = graphContainer.style.display === "none";
-				graphContainer.style.display = isHidden ? "block" : "none";
-			});
-
-		}
-
-
-		// If the graph container doesn't exist, create it
 		if (!graphContainer) {
 			graphContainer = document.createElement("div");
 			graphContainer.id = this.chartId + "-graph-container"; // Unique ID for the graph container
 			document.querySelector(this.container).appendChild(graphContainer);
 		} else {
-			// Empty the existing graph container before adding a new graph
-			graphContainer.innerHTML = "";
+			// Clear the contents of the graph container
+			graphContainer.innerHTML = '';
 		}
 
-		// Create the bar chart here
+		graphContainer.style.display = "block";
+
+		// Create or update the graph
 		new barChart({
 			container: "#" + this.chartId + "-graph-container", // Dynamically generated container
 			data: cityData.cityData, // Path to your CSV data
 			chartId: this.chartId
 		});
 
-		// Display the updated information in the container
-		cityDataContainer.innerHTML = `
-        <table class="city-data">
-            <tr>
-                <td>Total coming in</td>
-                <td class="bold">${cityData.totals.totalPeopleTo}</td>
-            </tr>
-            <tr>
-                <td>Total going out</td>
-                <td class="bold">${cityData.totals.totalPeopleFrom}</td>
-            </tr>
-            <tr>
-                <td>Population</td>
-                <td class="bold">${cityData.totals.population}</td>
-            </tr>
-        </table>
-    `;
+		// Add event listener for the toggle button
+		toggleButton.addEventListener("click", () => {
+			toggleButton.classList.toggle("active");
 
-		cityDataContainer.style.display = "block"; // Ensure it's visible when updated
+			const isHidden = graphContainer.style.display === "none";
+			graphContainer.style.display = isHidden ? "block" : "none";
+		});
 	}
-
 
 }
