@@ -2,11 +2,12 @@ class SvgLoader {
 	constructor(idToNameMapping, url) {
 		this.idToNameMapping = idToNameMapping;
 		this.url = url;
+		this.allPaths = [];
 		this.selectedPaths = []; // Store clicked paths
 		this.tooltip = document.getElementById('tooltip');
 	}
 
-	loadMap(){
+	loadMap() {
 		fetch(this.url)
 			.then(response => response.text())
 			.then(data => {
@@ -17,6 +18,8 @@ class SvgLoader {
 				const paths = document.querySelectorAll('#svgContainer path');
 
 				this.addEventListenersToPaths(paths);
+
+				this.allPaths = paths;
 			})
 			.catch(error => console.error("Error loading SVG:", error));
 	}
@@ -61,6 +64,7 @@ class SvgLoader {
 		} else {
 			this.selectedPaths.splice(index, 1);
 		}
+		console.log(this.selectedPaths);
 	}
 
 	// Method to get the list of selected paths
@@ -73,7 +77,6 @@ testing
 	getNameFromId(id) {
 		let nameObject = this.idToNameMapping[id]; // Access the object using bracket notation
 		if (nameObject) {
-			console.log(nameObject.name);
 			return nameObject.name;
 		}
 		console.log("ID not found:", id);
