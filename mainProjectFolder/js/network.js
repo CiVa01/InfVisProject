@@ -52,9 +52,9 @@ class Network {
         edges.sort((a, b) => b.weight - a.weight);
 
         // Only show lines to the 10 most popular destinations
-        edges = edges.slice(0, 10);
+        let topEdges = edges.slice(0, 10);
 
-        let targetIds = new Set(edges.map(edge => edge.target));
+        let targetIds = new Set(topEdges.map(edge => edge.target));
         let allPaths = Array.from(svgLoader.allPaths);
         allPaths = allPaths.filter(p => targetIds.has(p.getAttribute('id')));
 
@@ -76,8 +76,11 @@ class Network {
             .attr("opacity", "0.6")
             .style("pointer-events", "none");
 
+        // Calculate the total outgoing weight
+        let totalWeight = topEdges.reduce((sum, edge) => sum + edge.weight, 0);
+
         // Loop through each edge and draw a line
-        edges.forEach(edge => {
+        topEdges.forEach(edge => {
             let targetid = edge.target;
 
             let path = allPaths.filter(path => path.getAttribute('id') === targetid)[0];
@@ -88,7 +91,7 @@ class Network {
                 let targetY = targetBBox.y + targetBBox.height / 2;
 
                 // Calculate animation speed based on weight
-                let speed = Math.max(0.5, 2000 / edge.weight);
+                let speed = (edge.weight / totalWeight) * 1000;
 
                 // Draw the line with a dashed stroke
                 let line = g.append("line")
@@ -153,42 +156,46 @@ class Network {
 
             let edgeToTarget = this.network.find(e => e.source === id && e.target === targetId);
             if(edgeToTarget) {
-                let speedToTarget = Math.max(0.5, 2000 / edgeToTarget.weight);
+                let speedToTarget = Math.min(1000, Math.max(0.5, 200000 / edgeToTarget.weight));
 
                 let controlX1 = (sourceX + targetX) / 2;
                 let controlY1 = Math.min(sourceY, targetY) - 40;
 
                 let pathOutward = g.append("path")
                     .attr("d", `M${sourceX},${sourceY} Q${controlX1},${controlY1} ${targetX},${targetY}`)
-                    .attr("stroke", "black")
-                    .attr("stroke-width", 2)
                     .attr("fill", "none")
                     .attr("fill-opacity", 0)
                     .attr("stroke-dasharray", "5,5")
-                    .attr("opacity", function () {return Math.max(0.5, 1/edgeToTarget.weight);})
+                    .attr("opacity", 0.8)
                     .attr("stroke-linecap", "round")
-                    .style("pointer-events", "none");
+                    .style("pointer-events", "none")
+                    .style("stroke", "gold")  // Using .style to apply stroke color
+                    .style("stroke-width", function() {
+                        return  Math.min(20, Math.max(3, edgeToTarget.weight * 0.2));
+                    });;
 
                 animateDashedLine(pathOutward, speedToTarget);
             }
 
             let edgeToSource = this.network.find(e => e.source === targetId && e.target === id);
             if (edgeToSource) {
-                let speedToSource = Math.max(0.5, 2000 / edgeToSource.weight);
+                let speedToSource = Math.min( 1000, Math.max(0.5, 200000 / edgeToSource.weight));
 
                 let controlX2 = (sourceX + targetX) / 2;
                 let controlY2 = Math.max(sourceY, targetY) + 40;
 
                 let pathReturn = g.append("path")
                     .attr("d", `M${targetX},${targetY} Q${controlX2},${controlY2} ${sourceX},${sourceY}`)
-                    .attr("stroke", "red")
-                    .attr("stroke-width", 2)
                     .attr("fill", "none")
                     .attr("fill-opacity", 0)
                     .attr("stroke-dasharray", "5,5")
-                    .attr("opacity", function () {return Math.max(0.5, 1/edgeToSource.weight);})
+                    .attr("opacity", 0.8)
                     .attr("stroke-linecap", "round")
-                    .style("pointer-events", "none");
+                    .style("pointer-events", "none")
+                    .style("stroke", "darkblue")  // Using .style to apply stroke color
+                    .style("stroke-width", function() {
+                        return Math.min(200000, Math.max(3, edgeToSource.weight * 0.2));
+                    });
 
                 animateDashedLine(pathReturn, speedToSource);
             }

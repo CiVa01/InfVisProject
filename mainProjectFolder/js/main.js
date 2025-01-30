@@ -57,12 +57,13 @@ function initVis(){
 
 function updateVis() {
     console.log("updating visualisation");
-    //todo: Add listener that keeps track of how many municipalities are selected - TBA
-    let selection = svgLoader.getSelectedPaths();
-    
-    //todo: update the network such that it displays the correct behaviour depending on the selected municipalities - TBA
+    /*todo: at hier nog moet gebeuren is als volgt:
+    het dropdown menu en de svgloader en network moeten met elkaar praten. Oftewel, selectie moet overschreven worden door het dropdown en het juiste path halen
+    De visualisaties moeten nog correct geupdate worden.
+    Denk dat dat het meest ingewikkelde is
+    */
 
-    //todo: if-statement deciding wether 0, 1 or more municipalities are selected - CIS
+    let selection = svgLoader.getSelectedPaths();
     if(selection.length == 0){
         network.stop();
         // defaultVis.show();
