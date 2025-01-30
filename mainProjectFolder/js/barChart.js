@@ -2,8 +2,8 @@ class barChart {
 	constructor({ container, data, chartId }) {
 		this.container = container;
 		this.chartId = chartId; // Unique identifier for this chart
-		this.margin = { top: 40, right: 0, bottom: 0, left: 130 };
-		this.width = 276 - this.margin.left - this.margin.right;
+		this.margin = { top: 60, right: 0, bottom: 0, left: 130 };
+		this.width = 270 - this.margin.left - this.margin.right;
 		this.height = 150 - this.margin.top - this.margin.bottom;
 
 		// Initialize properties
@@ -41,7 +41,7 @@ class barChart {
 	createButtons() {
 		const buttonHtml = `
             <button type="button" class="buttonTop" id="toggle-ranking-${this.chartId}">
-                <span class="arrow">↥</span>
+                ↥
             </button>
             <button type="button" class="buttonSort" id="change-sorting-${this.chartId}">
                 %
@@ -74,8 +74,8 @@ class barChart {
 	arrowAnimation() {
 		this.immigration = !this.immigration; // Toggle between peopleTo and peopleFrom
 		d3.select(`#toggle-ranking-${this.chartId}`)
-			.classed("arrow-up", this.immigration) // true means "peopleTo"
-			.classed("arrow-down", !this.immigration); // false means "peopleFrom"
+			.classed("iconUp", this.immigration) // true means "peopleTo"
+			.classed("iconDown", !this.immigration); // false means "peopleFrom"
 	}
 
 	updateVisualization() {
@@ -140,9 +140,9 @@ class barChart {
 			.transition()
 			.duration(1000)
 			.style("opacity", 1)
-			.attr("x", d => (this.x(d.value) <= 40 ? this.x(d.value) + 5 : this.x(d.value) - 5))
-			.style("fill", d => (this.x(d.value) <= 40 ? "black" : "white")) // Pas de kleur aan afhankelijk van de breedte van de balk
-			.style("text-anchor", d => (this.x(d.value) <= 40 ? "start" : "end"))
+			.attr("x", d => (this.x(d.value) <= 35 ? this.x(d.value) + 5 : this.x(d.value) - 5))
+			.style("fill", d => (this.x(d.value) <= 35 ? "black" : "white")) // Pas de kleur aan afhankelijk van de breedte van de balk
+			.style("text-anchor", d => (this.x(d.value) <= 35 ? "start" : "end"))
 			.attr("y", d => this.y(d.city) + this.y.bandwidth() / 2 + 5)
 			.text(d => this.percentage ? d.value.toFixed(2) : d[rankingType]);
 
@@ -163,7 +163,7 @@ class barChart {
 			.attr("dx", "-6em")
 			.text(d => {
 				// Truncate text to a maximum of 20 characters
-				const maxLength = 18;
+				const maxLength = 15;
 				const text = d.toString();
 				return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 			})

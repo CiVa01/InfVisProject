@@ -2,12 +2,20 @@ class infoBlock {
 	constructor(chartId) {
 		this.chartId = chartId;
 		this.container = "#mainInfoBlockContainer";
+		this.datapath = "data/data_final.csv"
 		this.optionsData = []; // Om de optiesData op te slaan
 	}
 
 	init(){
 		this.makeDropdown();
-		this.loadData("data/data_final.csv");
+		this.loadData(this.datapath);
+	}
+
+
+	add(){
+		this.container = "#extraInfoBlockContainer";
+		this.makeDropdown();
+		this.loadData(this.datapath);
 	}
 
 	async makeDropdown() {
@@ -168,9 +176,10 @@ class infoBlock {
 		let toggleButton = document.createElement("button");
 		toggleButton.id = this.chartId + "-toggle";
 		toggleButton.textContent = '^'; // Button text
-		toggleButton.className = 'expandButton';
+		toggleButton.className = 'expandButton iconUp'; // Voeg iconUp toe als default
 		toggleButton.style.marginTop = "10px";
-		informationContainer.appendChild(toggleButton); // Append the button to the button container
+		informationContainer.appendChild(toggleButton);
+
 
 		// Find the graph container and clear its contents
 		let graphContainer = document.getElementById(this.chartId + "-graph-container");
@@ -193,10 +202,13 @@ class infoBlock {
 			chartId: this.chartId
 		});
 
-		// Add event listener for the toggle button
+		// Add event listener for toggling class and visibility
 		toggleButton.addEventListener("click", () => {
-			toggleButton.classList.toggle("active");
+			// Toggle rotation classes
+			toggleButton.classList.toggle("iconUp");
+			toggleButton.classList.toggle("iconDown");
 
+			// Toggle visibility of graphContainer
 			const isHidden = graphContainer.style.display === "none";
 			graphContainer.style.display = isHidden ? "block" : "none";
 		});

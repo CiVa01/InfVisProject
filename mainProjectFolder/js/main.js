@@ -50,6 +50,9 @@ function initVis(){
     // Initialize the main infoBlock
     let infoBlockMain = new infoBlock('main');
     infoBlockMain.init()
+
+    let infoBlockExtra = new infoBlock('extra');
+    infoBlockExtra.add()
 }
 
 function updateVis() {

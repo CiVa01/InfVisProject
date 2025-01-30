@@ -1,13 +1,14 @@
-#mainInfoBlockContainer{
+#mainInfoBlockContainer, #extraInfoBlockContainer{
     background: #d8d8d8;
     border-radius: 30px;
     padding: 15px;
     min-width: 306px;
 }
 
-#button-div-main {
+.buttonGraph {
     display: flex;
     justify-content: flex-end;
+    padding-top: 15px;
 }
 
 .button-container {
@@ -35,14 +36,21 @@ table.city-data td:first-child {
     font: 14px "Arial";
 }
 
-.buttonGraph {
-    padding-top: 15px;
+.chart-title {
+    fill: #373737;
+    font: 16px "Arial";
+    transform: translateX(-131px) translateY(-20px);
+    font-weight: bold;
+}
+
+#main-information, #extra-information {
+    position: relative;
 }
 
 .expandButton {
-    margin-left: auto;
-    margin-right: 0;
-    display: block;
+    position: absolute;
+    bottom: 0; /* Plaatst de knop onderaan */
+    right: 0; /* Plaatst de knop rechts */
 }
 
 .buttonTop, .buttonSort {
@@ -85,12 +93,12 @@ button:hover {
     transition: transform 0.3s ease;
 }
 
-.arrow-up {
+.iconUp {
     transform: rotate(0deg);
     transition: transform 0.3s ease;
 }
 
-.arrow-down {
+.iconDown {
     transform: rotate(180deg);
     transition: transform 0.3s ease;
 }
