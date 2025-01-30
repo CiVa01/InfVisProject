@@ -72,6 +72,8 @@ class SvgLoader {
 }
 
 function getNameFromId(id) {
+	console.log(idToNameMapping.get(id));
+	console.log()
 	let name = idToNameMapping.get(id).name;
 	return name; // Als de ID niet bestaat in de mapping, geef de ID zelf terug
 }

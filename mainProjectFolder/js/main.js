@@ -36,23 +36,26 @@ function loadData() {
 }
 
 function initVis(){
+    console.log("initialising visualisation");
     let netData = new Network(data);
     let netWork = netData.network;
+    console.log(netData.regions);
     svgLoader = new SvgLoader(netData.regions, '/mainProjectFolder/data/Nederland_gemeenten_2021.svg');
-    // todo: Get the map visualised in the correct box - CIS
     svgLoader.loadMap();
     // todo: load in the default visualisation with explanations of how things work - ROB
-    let defaultVis = new defaultVis();
+    // let defaultVis = new defaultVis();
+    let infoBlockInit = new infoBlock();
+
+    infoBlockInit.make()
 }
 
 function updateVis() {
+    console.log("updating visualisation");
     //todo: Add listener that keeps track of how many municipalities are selected - TBA
     let selection = svgLoader.getSelectedPaths();
     console.log(selection);
     //todo: update the network such that it displays the correct behaviour depending on the selected municipalities - TBA
-    let infoBlockInit = new infoBlock();
 
-    infoBlockInit.make()
     //todo: if-statement deciding wether 0, 1 or more municipalities are selected - CIS
     if(selection.length == 0){
         // defaultVis.show();
