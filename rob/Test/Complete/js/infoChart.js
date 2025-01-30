@@ -4,7 +4,7 @@ class infoChart {
 		this.container = container;
 
 		this.optionsData = []; // Om de optiesData op te slaan
-		this.makeDropdown();
+		this.makeDropdown()
 		this.loadData(dataPath);
 	}
 
@@ -134,13 +134,12 @@ class infoChart {
 
 
 	displayCityData(cityData) {
-		// Check if the container already exists
-
 		console.log(cityData);
 
 		let cityDataContainer = document.getElementById(this.chartId + "-information");
 		let toggleButton = document.getElementById(this.chartId + "-toggle");
 		let graphContainer = document.getElementById(this.chartId + "-graph-container");
+		let buttonContainer = document.getElementById(this.chartId + "-button-container");
 
 		// If the container doesn't exist, create it
 		if (!cityDataContainer) {
@@ -149,20 +148,41 @@ class infoChart {
 			document.querySelector(this.container).appendChild(cityDataContainer);
 		}
 
+		// If the button container doesn't exist, create it
+		if (!buttonContainer) {
+			buttonContainer = document.createElement("div");
+			buttonContainer.id = this.chartId + "-button-container"; // Unique ID for the button container
+			buttonContainer.classList.add("button-container"); // Add the class for styling
+			document.querySelector(this.container).appendChild(buttonContainer);
+		}
+
 		// If the toggle button doesn't exist, create it
 		if (!toggleButton) {
+			// Create the button container
+			const buttonContainer = document.createElement("div");
+			buttonContainer.classList.add("button-container"); // Add the class to the container
+			document.querySelector(this.container).appendChild(buttonContainer);
+
+			// Create the toggle button
 			toggleButton = document.createElement("button");
 			toggleButton.id = this.chartId + "-toggle"; // Unique ID for the toggle button
-			toggleButton.textContent = "^"; // Button text
+			toggleButton.textContent =  '^'; // Button text
+			toggleButton.className = 'arrow';
 			toggleButton.style.marginTop = "10px";
-			document.querySelector(this.container).appendChild(toggleButton);
+			toggleButton.classList.add("expandButton"); // Add the expandButton class to the button
+			buttonContainer.appendChild(toggleButton); // Append the button to the button container
 
 			// Add event listener for the toggle button
 			toggleButton.addEventListener("click", () => {
+				// Toggle the 'active' class on the button to switch between active and inactive states
+				toggleButton.classList.toggle("active");
+
 				const isHidden = graphContainer.style.display === "none";
 				graphContainer.style.display = isHidden ? "block" : "none";
 			});
+
 		}
+
 
 		// If the graph container doesn't exist, create it
 		if (!graphContainer) {
@@ -182,8 +202,25 @@ class infoChart {
 		});
 
 		// Display the updated information in the container
-		cityDataContainer.innerHTML = `Total coming in <b>${cityData.totals.totalPeopleTo}</b> <br> Total going out <b> ${cityData.totals.totalPeopleFrom}</b> <br> Population <b> ${cityData.totals.population}</b>`;
+		cityDataContainer.innerHTML = `
+        <table class="city-data">
+            <tr>
+                <td>Total coming in</td>
+                <td class="bold">${cityData.totals.totalPeopleTo}</td>
+            </tr>
+            <tr>
+                <td>Total going out</td>
+                <td class="bold">${cityData.totals.totalPeopleFrom}</td>
+            </tr>
+            <tr>
+                <td>Population</td>
+                <td class="bold">${cityData.totals.population}</td>
+            </tr>
+        </table>
+    `;
+
 		cityDataContainer.style.display = "block"; // Ensure it's visible when updated
 	}
+
 
 }

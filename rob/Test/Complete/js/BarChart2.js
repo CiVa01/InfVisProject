@@ -4,7 +4,7 @@ class BarChart2 {
 		this.chartId = chartId; // Unique identifier for this chart
 		this.margin = { top: 40, right: 40, bottom: 15, left: 170 };
 		this.width = 400 - this.margin.left - this.margin.right;
-		this.height = 150 - this.margin.top - this.margin.bottom;
+		this.height = 190 - this.margin.top - this.margin.bottom;
 
 		// Initialize properties
 		this.immigration = true; // Default to peopleTo
@@ -28,7 +28,7 @@ class BarChart2 {
 			.attr("transform", `translate(${this.margin.left}, ${this.margin.top})`);
 
 		this.x = d3.scaleLinear().range([0, this.width]);
-		this.y = d3.scaleBand().range([0, this.height]).paddingInner(0.1);
+		this.y = d3.scaleBand().range([0, this.height]).paddingInner(0.2);
 
 		this.yAxis = d3.axisLeft(this.y).tickSize(0);
 		this.yAxisGroup = this.svg.append("g").attr("class", "y-axis axis");
@@ -142,9 +142,13 @@ class BarChart2 {
 			.transition()
 			.duration(1000)
 			.style("opacity", 1)
-			.attr("x", d => this.x(d.value) - 5)
+			.attr("x", d => (this.x(d.value) <= 40 ? this.x(d.value) + 5 : this.x(d.value) - 5))
+			.style("fill", d => (this.x(d.value) <= 40 ? "black" : "white")) // Pas de kleur aan afhankelijk van de breedte van de balk
+			.style("text-anchor", d => (this.x(d.value) <= 40 ? "start" : "end"))
 			.attr("y", d => this.y(d.city) + this.y.bandwidth() / 2 + 5)
 			.text(d => this.percentage ? d.value.toFixed(2) : d[rankingType]);
+
+
 
 		labels.exit()
 			.transition()
@@ -158,7 +162,13 @@ class BarChart2 {
 			.call(this.yAxis)
 			.selectAll(".tick text")
 			.attr("text-anchor", "start")
-			.attr("dx", "-6em");
+			.attr("dx", "-6em")
+			.text(d => {
+				// Truncate text to a maximum of 20 characters
+				const maxLength = 18;
+				const text = d.toString();
+				return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+			});
 
 		// Update chart title
 		this.chartTitle

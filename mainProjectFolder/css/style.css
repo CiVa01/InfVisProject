@@ -94,11 +94,11 @@ h2 {
   color: #0056b3;
 }
 
-.chart-container {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 20px;
-}
+/*.chart-container {*/
+/*  display: flex;*/
+/*  flex-wrap: wrap;*/
+/*  margin-top: 20px;*/
+/*}*/
 
 .chart {
   border: 1px solid #ccc;
@@ -109,3 +109,5 @@ h2 {
   margin: 10px;
   text-align: center;
 }
+
+

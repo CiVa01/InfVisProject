@@ -1,0 +1,19 @@
+#infoBlockContainer{
+    background: #cccccc;
+    border-radius: 20px;
+    padding: 15px;
+}
+
+
+.button-container {
+    float: right;
+}
+
+
+table.city-data td:first-child {
+    color: #7c7c7c;
+}
+
+table.city-data td.bold {
+    color: #000000;
+}

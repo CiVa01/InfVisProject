@@ -1,6 +1,6 @@
 
 body {
-	font-family: 'Lato', sans-serif;
+	font-family: Arial, sans-serif;
 	background-color: #ffffff;
 }
 
@@ -42,26 +42,28 @@ h2 {
 .label {
     fill: #ffffff;
     font: 1rem/1.4rem sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 .chart-title {
-    fill: #000000;
-    font: 1rem/1.4rem sans-serif;
+    fill: #373737;
+    font: 1rem/1.6rem Arial, sans-serif;
+    transform: translateX(-170px) translateY(-20px);
     font-weight: bold;
 }
 
 .chart-area {
   background-color: #dadada;
-  padding: 15px;
+  padding: 30px;
   margin: 10px 0;
   width: 400px;
-  border-radius: 30px;
+  border-radius: 47px;
 }
 
 
 button{
-  width: 26px; /* Stel de breedte in */
-  height: 26px; /* Stel de hoogte in */
+  width: 40px; /* Stel de breedte in */
+  height: 40px; /* Stel de hoogte in */
   border-radius: 50%; /* Zorg ervoor dat de knop rond is */
   border: none; /* Verwijder de rand */
   background-color: #bdbdbd; /* Primaire knopkleur */
@@ -96,7 +98,7 @@ button:hover {
   /*margin-bottom: 10px; !* Optioneel: voeg wat ruimte toe onder de knoppen *!*/
 }
 
-.buttonTop, .buttonSort {
+.buttonTop, .buttonSort, .expandButton {
   background-color: #f0f0f0; /* Pas de knopstijl aan naar wens */
   border: 1px solid #ccc;
   padding: 5px 10px;
@@ -105,14 +107,21 @@ button:hover {
   border-radius: 50%;
 }
 
-.buttonTop:hover, .buttonSort:hover {
+.buttonTop:hover, .buttonSort:hover, .expandButton:hover{
   background-color: #ddd; /* Hover effect */
 }
 
 .arrow {
   padding-top: -15px;  /* Adjust this value to move the arrow vertically */
   font-size: 16px;
-  font-family: 'Roboto', sans-serif;
+  font-family: Arial, sans-serif;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+.arrow.active {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
 }
 
 .arrow-up {
@@ -143,21 +152,6 @@ button:hover {
   display: block; /* Standaard zichtbaar */
 }
 
-/* Stijlen voor knoppen */
-.chart-toggle-button {
-  margin-top: 10px;
-  cursor: pointer;
-  padding: 5px 10px;
-  border: none;
-  background-color: #656565;
-  color: #000000;
-  border-radius: 50%;
-  font-size: 14px;
-}
-
-.chart-toggle-button:hover {
-  background-color: #515151;
-}
 
 /* General styles for the minimalistic dropdown */
 .minimal-dropdown {
@@ -202,13 +196,32 @@ button:hover {
   margin-top: 20px;
 }
 
-.chart-title {
-  transform: translateX(-170px) translateY(-15px); /* Verplaats de titel naar links en boven */
+.y-axis .tick text {
+  transform: translateX(-70px); /* Verplaats de tekst naar links */
+  color: #7c7c7c;
 }
 
-.y-axis .tick text {
-  transform: translateX(-70px); /* Verplaats de tekst 10px naar links */
+table.city-data {
+  margin-top: 15px;
+  width: 100%;
+  border-collapse: collapse;
 }
+
+table.city-data td {
+  padding: 5px;
+  text-align: left;
+}
+
+table.city-data td:first-child {
+  width: 40%;
+  color: #7c7c7c;
+}
+
+table.city-data td.bold {
+  color: #000000;
+}
+
+
 
 
 

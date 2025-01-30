@@ -1,13 +1,15 @@
 class infoBlock {
-	constructor() {
+	constructor(chartId) {
+		this.chartId = chartId;
 		this.container = "#infoBlockContainer";
 		this.optionsData = []; // Om de optiesData op te slaan
 	}
 
-	make(){
+	init(){
 		this.makeDropdown();
 		this.loadData("data/data_final.csv");
 	}
+
 	async makeDropdown() {
 		// Fetch CSV data
 		const response = await fetch("data/municipalities.csv");
@@ -55,7 +57,6 @@ class infoBlock {
 			this.selectData(selectedCity); // Pass the selected city to your CSV processing function
 		});
 	}
-
 
 
 	loadData(dataPath) {

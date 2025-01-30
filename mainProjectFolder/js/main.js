@@ -42,11 +42,11 @@ function initVis(){
     console.log(netData.regions);
     svgLoader = new SvgLoader(netData.regions, '/mainProjectFolder/data/Nederland_gemeenten_2021.svg');
     svgLoader.loadMap();
-    // todo: load in the default visualisation with explanations of how things work - ROB
-    // let defaultVis = new defaultVis();
-    let infoBlockInit = new infoBlock();
 
-    infoBlockInit.make()
+    // todo: load in the default visualisation with explanations of how things work - ROB
+    // Initialize the main infoBlock
+    let infoBlockMain = new infoBlock('main');
+    infoBlockMain.init()
 }
 
 function updateVis() {
@@ -69,5 +69,4 @@ function updateVis() {
         // If >= 2, display the first municipality first and then add blocks for all subsequent municipalites
 }
 
-document.getElementById("infoButton").addEventListener("click", updateVis);
 document.getElementById("svgContainer").addEventListener("click", updateVis);
