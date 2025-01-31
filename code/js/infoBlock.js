@@ -4,8 +4,8 @@ class infoBlock {
 		this.chartId = chartId;
 		this.container = container;
 		this.blockContainer = [];
-		this.datapath = "data/data_final.csv";
-		this.municipalityDataPath = "data/municipalities.csv";
+		this.datapath = "/code/data/data_final.csv";
+		this.municipalityDataPath = "/code/data/municipalities.csv";
 		this.optionsData = [];
 		this.data = [];
 		this.createContainer();

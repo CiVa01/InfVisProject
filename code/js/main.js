@@ -52,7 +52,7 @@ loadData();
 initVis();
 function loadData() {
     try {
-        d3.csv("/mainProjectFolder/data/data_final.csv", row => {
+        d3.csv("/code/data/data_final.csv", row => {
             // Ensure AmountOfPeople is converted to an integer
             row.AmountOfPeople = +row.AmountOfPeople;
             return row;
@@ -72,7 +72,7 @@ function loadData() {
 function initVis(){
     console.log("initialising visualisation");
     network = new Network(data);
-    svgLoader = new SvgLoader(network.regions, '/mainProjectFolder/data/Nederland_gemeenten_2021.svg');
+    svgLoader = new SvgLoader(network.regions, '/code/data/Nederland_gemeenten_2021.svg');
     svgLoader.loadMap();
 
     // Initialize the main infoBlock
@@ -158,7 +158,7 @@ function getEdgeWeight(source, target) {
 
 // Pas de functie aan om het resultaat van getCityFromRegionId asynchroon te verwerken
 async function getCityFromRegionId(name) {
-    let datapath = 'data/idToName.csv';
+    let datapath = '/code/data/idToName.csv';
     console.log(name);
 
     // Haal het CSV-bestand op en wacht op de gegevens
