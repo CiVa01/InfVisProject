@@ -20,6 +20,30 @@ var data;
 // Store the network
 var network;
 
+d3.select("#refresh-button")
+    .on("click", function() {
+        console.log("Resetting visualization...");
+
+        // // Reset de geselecteerde paden in de SVG
+        // if (svgLoader) {
+        //     svgLoader.resetMap(); // Zorg dat je een resetfunctie hebt in SvgLoader
+        // }
+
+        // Maak de info containers leeg
+        document.querySelector("#mainInfoBlockContainer").innerHTML = "";
+        document.querySelector("#extraInfoBlockContainer").innerHTML = "";
+
+        // Leeg de geselecteerde stedenlijst
+        cityList = [];
+
+        // Stop de netwerkvisualisatie
+        if (network) {
+            network.stop();
+        }
+
+        // Herlaad de visualisatie
+        initVis();
+    }); // Controleer of de knop is gevonden
 
 
 
@@ -158,12 +182,6 @@ async function getCityFromRegionId(name) {
     return null;
 }
 
-
-// Refresh Knop
-d3.select("#refresh-button")
-    .on("click", function() {
-        console.log("Resetting visualization...");
-    });
 
 
 
