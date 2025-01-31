@@ -12,6 +12,10 @@
     padding-top: 10px;
 }
 
+.chart-container{
+    text-align: left;
+}
+
 .row {
     width: 130%; /* Make the row wider than its container */
     margin-left: -15%; /* Shift it to the left to keep it centered */
@@ -91,6 +95,16 @@ button{
     justify-content: center; /* Horizontaal centreren */
     cursor: pointer; /* Maak de cursor een pointer */
     transition: background-color 0.3s ease; /* Animatie voor hover */
+}
+
+
+#refresh-button {
+    background: #c6c6c6;
+}
+
+#refresh-button:hover {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
 }
 
 button:hover {

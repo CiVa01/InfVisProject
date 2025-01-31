@@ -11,7 +11,8 @@ class infoBlock {
 		this.createContainer();
 		this.init();
 		this.style = collapsed ? 'none' : 'block';
-		this.arrowSvg = d3.select("#arrowsContainer");
+		this.collapsed = collapsed;
+		// this.arrowSvg = d3.select("#arrowsContainer");
 	}
 
 	// Verantwoordelijk voor het laden van de data en het aanroepen van makeDropdown
@@ -183,7 +184,7 @@ class infoBlock {
 
 		let toggleButton = document.createElement("button");
 		toggleButton.id = this.chartId + "-toggle";
-		toggleButton.className = 'expandButton iconDown';
+		toggleButton.className = this.collapsed ? 'expandButton iconDown' : 'expandButton iconUp';
 		let icon = document.createElement("i");
 		icon.className = 'fa-solid fa-angle-up';
 		toggleButton.appendChild(icon);
