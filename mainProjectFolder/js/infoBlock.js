@@ -91,7 +91,39 @@ class infoBlock {
 			this.selectData(selectedCity); // Verwerk de selectie
 		});
 	}
+	drawArrow(fromElement, toElement, weight, inverseWeight) {
+		const svg = d3.select("#arrowsContainer").append("svg")
+			.attr("width", "10%")
+			.attr("height", "100%")
+			.style("position", "absolute")
+			.style("top", "0")
+			.style("left", "0")
+			.style("pointer-events", "none");
 
+		const fromRect = fromElement.blockContainer.querySelector("svg").getBoundingClientRect();
+		const toRect = toElement.blockContainer.querySelector("svg").getBoundingClientRect();
+
+		const fromX = fromRect.left + window.scrollX + fromRect.width / 2;
+		const fromY = fromRect.top + window.scrollY + fromRect.height / 2;
+		const toX = toRect.left + window.scrollX + toRect.width / 2;
+		const toY = toRect.top + window.scrollY + toRect.height / 2;
+
+		svg.append("line")
+			.attr("x1", fromX)
+			.attr("y1", fromY)
+			.attr("x2", toX)
+			.attr("y2", toY)
+			.attr("stroke", "black")
+			.attr("stroke-width", function () { return weight > 5 ? weight : 5 });
+
+		svg.append("line")
+			.attr("x1", toX)
+			.attr("y1", toY)
+			.attr("x2", fromX)
+			.attr("y2", fromY)
+			.attr("stroke", "red")
+			.attr("stroke-width", function () { return inverseWeight > 5 ? inverseWeight : 5 });
+	}
 	// Verwerk de geselecteerde stad en update de gegevens
 	selectData(selectedCity) {
 		const result = {};

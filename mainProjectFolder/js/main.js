@@ -107,12 +107,14 @@ async function drawInfoBlocks(cities) {
     mainContainer.innerHTML = "";
     extraContainer.innerHTML = "";
 
-    // Verwerk het hoofd info block
+    let mainInfoBlock;
+
+    // Process the main info block
     if (cities.length > 0) {
         // Haal de stad op via getCityFromRegionId en wacht op het resultaat
         let city = await getCityFromRegionId(cities[0]);
         if (city) {  // Zorg ervoor dat er een stad is
-            new infoBlock(cities[0], "#mainInfoBlockContainer", city.trimEnd(), false);
+            mainInfoBlock = new infoBlock(cities[0], "#mainInfoBlockContainer", city.trimEnd(), false);
 
         }
     }
@@ -121,9 +123,21 @@ async function drawInfoBlocks(cities) {
     for (let i = 1; i < cities.length; i++) {
         let city = await getCityFromRegionId(cities[i]);
         if (city) {  // Zorg ervoor dat er een stad is
-            new infoBlock(cities[i], "#extraInfoBlockContainer", city.trimEnd(), true);
+            let extraInfoBlock = new infoBlock(cities[i], "#extraInfoBlockContainer", city.trimEnd(), true);
+
+            if (mainInfoBlock) {
+                const weight = getEdgeWeight(cities[0], cities[i]);
+                const inverseWeight = getEdgeWeight(cities[i], cities[0]);
+                mainInfoBlock.drawArrow(mainInfoBlock, extraInfoBlock, weight, inverseWeight);
+            }
         }
     }
+}
+
+function getEdgeWeight(source, target) {
+    console.log("getting edge weight");
+    const edge = network.network.find(edge => edge.source === source && edge.target === target);
+    return edge ? edge.weight : 5;
 }
 
 // Pas de functie aan om het resultaat van getCityFromRegionId asynchroon te verwerken
