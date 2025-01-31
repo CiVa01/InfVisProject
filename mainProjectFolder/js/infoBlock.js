@@ -7,16 +7,21 @@ class infoBlock {
 	}
 
 	init(){
-		this.makeDropdown();
 		this.loadData(this.datapath);
+		this.makeDropdown();
 	}
 
 
-	add(){
-		this.container = "#extraInfoBlockContainer";
-		this.makeDropdown();
-		this.loadData(this.datapath);
+	loadData(dataPath) {
+		d3.csv(dataPath, row => {
+			row.AmountOfPeople = +row.AmountOfPeople;  // Dit is goed, omdat AmountOfPeople een numerieke waarde is
+
+			return row;
+		}).then(csv => {
+			this.data = csv;
+		});
 	}
+
 
 	async makeDropdown() {
 		// Fetch CSV data
@@ -67,17 +72,7 @@ class infoBlock {
 	}
 
 
-	loadData(dataPath) {
-		d3.csv(dataPath, row => {
-			row.AmountOfPeople = +row.AmountOfPeople;  // Dit is goed, omdat AmountOfPeople een numerieke waarde is
-
-			return row;
-		}).then(csv => {
-			this.data = csv;
-		});
-	}
-
-	selectData(targetCity) {
+	selectData(selectedCity) {
 		const result = {};
 		let totalPeopleFrom = 0;
 		let totalPeopleTo = 0;
@@ -95,7 +90,7 @@ class infoBlock {
 			const regionFromName = row.RegionFromName;
 
 			// If the target city is the "to" city, add to the peopleTo count for the regionFromName
-			if (regionToName === targetCity) {
+			if (regionToName === selectedCity) {
 				if (!result[regionFromName]) {
 					result[regionFromName] = {
 						city: regionFromName,
@@ -109,7 +104,7 @@ class infoBlock {
 			}
 
 			// If the target city is the "from" city, add to the peopleFrom count for the regionToName
-			if (regionFromName === targetCity) {
+			if (regionFromName === selectedCity) {
 				if (!result[regionToName]) {
 					result[regionToName] = {
 						city: regionToName,
@@ -124,7 +119,7 @@ class infoBlock {
 		});
 
 		// Zoek de populatie van de geselecteerde stad in optionsData
-		const selectedCityData = this.optionsData.find(option => option.city === targetCity);
+		const selectedCityData = this.optionsData.find(option => option.city === selectedCity);
 		const selectedPopulation = selectedCityData ? selectedCityData.population : 0;
 
 		// Voeg de populatie toe aan de selectedData
@@ -175,8 +170,10 @@ class infoBlock {
 		// Create the toggle button
 		let toggleButton = document.createElement("button");
 		toggleButton.id = this.chartId + "-toggle";
-		toggleButton.textContent = '^'; // Button text
 		toggleButton.className = 'expandButton iconUp'; // Voeg iconUp toe als default
+		let icon = document.createElement("i");
+		icon.className = 'fa-solid fa-angle-up';
+		toggleButton.appendChild(icon);
 		toggleButton.style.marginTop = "10px";
 		informationContainer.appendChild(toggleButton);
 

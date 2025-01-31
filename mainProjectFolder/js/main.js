@@ -1,12 +1,13 @@
 
 const clickedPaths = [];
+
 const svgContainer = document.getElementById('svgContainer');
 
 // SVG namespace
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 document.getElementById("svgContainer").addEventListener("click", updateVis);
-//document.getElementById("infoButton").addEventListener("click", updateVis);
+
 // Create a global object for the SVG
 let svgLoader;
 
@@ -16,8 +17,6 @@ var data;
 // Store the network
 var network;
 
-// counter for infoBlocks
-var infoBlockCounter = 0
 
 // Initialize data
 loadData();
@@ -50,9 +49,6 @@ function initVis(){
     // Initialize the main infoBlock
     let infoBlockMain = new infoBlock('main');
     infoBlockMain.init()
-
-    let infoBlockExtra = new infoBlock('extra');
-    infoBlockExtra.add()
 }
 
 function updateVis() {
@@ -64,11 +60,14 @@ function updateVis() {
     */
 
     let selection = svgLoader.getSelectedPaths();
+    console.log(selection);
+
     if(selection.length == 0){
         network.stop();
         // defaultVis.show();
     }else if(selection.length == 1){
         network.stop();
+
         // infoBlockInit.show(selection)
         network.showOne(svgLoader);
     }else{

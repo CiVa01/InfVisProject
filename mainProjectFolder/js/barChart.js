@@ -41,10 +41,10 @@ class barChart {
 	createButtons() {
 		const buttonHtml = `
             <button type="button" class="buttonTop" id="toggle-ranking-${this.chartId}">
-                ↥
+                <i class="fa-solid fa-arrow-turn-up"></i>
             </button>
             <button type="button" class="buttonSort" id="change-sorting-${this.chartId}">
-                %
+                <i class="fa-solid fa-percent"></i>
             </button>`;
 
 		d3.select(this.container)

@@ -1,8 +1,21 @@
 #mainInfoBlockContainer, #extraInfoBlockContainer{
-    background: #d8d8d8;
+    background: #dadada;
     border-radius: 30px;
     padding: 15px;
-    min-width: 306px;
+    width: 306px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.container {
+    padding-bottom: 20px;
+    padding-top: 10px;
+}
+
+.row {
+    width: 130%; /* Make the row wider than its container */
+    margin-left: -15%; /* Shift it to the left to keep it centered */
+    margin-right: -15%; /* Shift it to the right */
 }
 
 .buttonGraph {
@@ -21,7 +34,7 @@ table.city-data {
     width: 100%;
 }
 table.city-data td:first-child {
-    width: 45%;
+    width: 46%;
     color: #7c7c7c;
 }
 
@@ -36,6 +49,10 @@ table.city-data td:first-child {
     font: 14px "Arial";
 }
 
+.domain {
+    stroke: none;
+    color: rgba(255, 255, 255, 0) !important;
+}
 .chart-title {
     fill: #373737;
     font: 16px "Arial";
@@ -62,7 +79,7 @@ button{
     height: 30px; /* Stel de hoogte in */
     border-radius: 50%; /* Zorg ervoor dat de knop rond is */
     border: none; /* Verwijder de rand */
-    background-color: #e6e6e6; /* Primaire knopkleur */
+    background-color: #ececec; /* Primaire knopkleur */
     color: #000000; /* Kleur van de tekst of icon */
     display: flex; /* Zorg ervoor dat de inhoud goed wordt gecentreerd */
     align-items: center; /* Verticaal centreren */
@@ -115,7 +132,7 @@ button:hover {
     font-size: 16px;
     font-family: Arial, sans-serif;
     background-color: #d9d9d9;
-    border: 1px solid #d8d8d8;
+    border: 1px solid #d9d9d9;
     border-radius: 30px;
     color: #333;
     outline: none;
