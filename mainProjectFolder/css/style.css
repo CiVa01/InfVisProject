@@ -102,12 +102,16 @@ h2 {
 /*  margin-top: 20px;*/
 /*}*/
 
-.chart {
-  border: 1px solid #ccc;
-  border-radius: 8px;
+.chart-container {
   padding: 15px;
-  background: #fff;
-  width: 45%;
+  background: #f4f4f9;
+  flex: 1; /* Allow the chart to grow and shrink */
   margin: 10px;
   text-align: center;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Distribute space between items */
 }
