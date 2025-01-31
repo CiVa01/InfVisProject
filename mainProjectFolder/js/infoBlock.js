@@ -12,7 +12,6 @@ class infoBlock {
 		this.init();
 		this.style = collapsed ? 'none' : 'block';
 		this.collapsed = collapsed;
-		// this.arrowSvg = d3.select("#arrowsContainer");
 	}
 
 	// Verantwoordelijk voor het laden van de data en het aanroepen van makeDropdown
@@ -222,8 +221,7 @@ class infoBlock {
 		const svgContainer = document.getElementById("arrowsContainer");
 
 		// op de een of andere manier worden de svgs niet zichtbaar
-		// ook al worden ze nu global aangemaakt en onthouden
-		this.arrowSvg.append("svg")
+		let arrowSvg = d3.select("arrowsContainer").append("svg")
 			.attr("width", svgContainer.clientWidth)
 			.attr("height", svgContainer.clientHeight)
 			.style("position", "absolute");
@@ -236,21 +234,21 @@ class infoBlock {
 		const toX = toRect.left  + toRect.width / 2;
 		const toY = toRect.top+ toRect.height / 2;
 
-		this.arrowSvg.append("line")
+		arrowSvg.append("path")
 			.attr("x1", fromX)
 			.attr("y1", fromY)
 			.attr("x2", toX)
 			.attr("y2", toY)
-			.attr("stroke", "black")
-			.attr("stroke-width", weight > 5 ? weight : 5);
+			.attr("stroke", "darkblue")
+			.attr("stroke-width", weight > 5 ? Math.min(20, otherWeight) : 5);
 
-		this.arrowSvg.append("line")
+		arrowSvg.append("path")
 			.attr("x1", toX)
 			.attr("y1", toY)
 			.attr("x2", fromX)
 			.attr("y2", fromY)
-			.attr("stroke", "red")
-			.attr("stroke-width", otherWeight > 5 ? otherWeight : 5);
+			.attr("stroke", "gold")
+			.attr("stroke-width", otherWeight > 5 ? Math.min(20, otherWeight) : 5);
 	}
 }
 

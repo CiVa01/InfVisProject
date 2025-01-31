@@ -91,7 +91,7 @@ class Network {
                 let targetY = targetBBox.y + targetBBox.height / 2;
 
                 // Calculate animation speed based on weight
-                let speed = (edge.weight / totalWeight) * 1000;
+                let speed = (totalWeight - edge.weight) / totalWeight * 500;
 
                 // Draw the line with a dashed stroke
                 let line = g.append("line")
@@ -171,7 +171,7 @@ class Network {
                     .style("pointer-events", "none")
                     .style("stroke", "gold")  // Using .style to apply stroke color
                     .style("stroke-width", function() {
-                        return  Math.min(20, Math.max(3, edgeToTarget.weight * 0.2));
+                        return  Math.min(10, Math.max(1, edgeToTarget.weight * 0.2));
                     });;
 
                 animateDashedLine(pathOutward, speedToTarget);

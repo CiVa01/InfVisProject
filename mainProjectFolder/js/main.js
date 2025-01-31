@@ -141,11 +141,11 @@ async function drawInfoBlocks(cities) {
         if (city) {  // Zorg ervoor dat er een stad is
             let extraInfoBlock = new infoBlock(cities[i], "#extraInfoBlockContainer", city.trimEnd(), true);
 
-            // if (mainInfoBlock) {
-            //     const weight = getEdgeWeight(cities[0], cities[i]);
-            //     const otherWeight = getEdgeWeight(cities[i], cities[0]);
-            //     mainInfoBlock.drawArrow(extraInfoBlock, weight, otherWeight);
-            // }
+            if (mainInfoBlock) {
+                const weight = getEdgeWeight(cities[0], cities[i]);
+                const otherWeight = getEdgeWeight(cities[i], cities[0]);
+                mainInfoBlock.drawArrow(extraInfoBlock, weight, otherWeight);
+            }
         }
     }
 }
