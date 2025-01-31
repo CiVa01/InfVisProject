@@ -57,7 +57,6 @@ class infoChart {
 	}
 
 
-
 	loadData(dataPath) {
 		d3.csv(dataPath, row => {
 			row.AmountOfPeople = +row.AmountOfPeople;  // Dit is goed, omdat AmountOfPeople een numerieke waarde is
@@ -131,7 +130,6 @@ class infoChart {
 		// Create or update the display for the selected city's data
 		this.displayCityData(selectedData);
 	}
-
 
 	displayCityData(cityData) {
 		console.log(cityData);
@@ -221,6 +219,5 @@ class infoChart {
 
 		cityDataContainer.style.display = "block"; // Ensure it's visible when updated
 	}
-
 
 }

@@ -1,41 +1,34 @@
 class infoBlock {
-	constructor(chartId, container) {
+	constructor(chartId, container, city) {
+		this.city = city;
 		this.chartId = chartId;
 		this.container = container;
-		this.blockContainer =  []
-		this.datapath = "data/data_final.csv"
-		this.optionsData = []; // Om de optiesData op te slaan
-
+		this.blockContainer = [];
+		this.datapath = "data/data_final.csv";
+		this.municipalityDataPath = "data/municipalities.csv";
+		this.optionsData = [];
+		this.data = [];
 		this.createContainer();
 		this.init();
 	}
 
-	init(){
-		this.loadData(this.datapath);
-		this.makeDropdown();
+	// Verantwoordelijk voor het laden van de data en het aanroepen van makeDropdown
+	async init() {
+		await this.loadData(this.datapath); // Laad de gegevens van data_final.csv
+		await this.loadMunicipalityData(this.municipalityDataPath); // Laad de gegevens van municipalities.csv
+		// this.makeDropdown(); // Maak de dropdown nadat de data is geladen
 
+		// document.addEventListener("change", (event) => {
+		// 	if (event.target.matches("select")) {
+		// 		console.log('selected something');
+		// 		// updateVis();
+		// 	}
+		// });
 
-		document.addEventListener("change", function(event) {
-			if (event.target.matches("select")) {
-				console.log('selected something')
-				updateVis();
-			}
-		});
+		this.selectData(this.city)
 	}
 
-
-	clearContainer() {
-		// Vind het container-element met de unieke ID
-		let container = document.getElementById(this.chartId + "-container");
-
-		if (container) {
-			// Maak de inhoud van de container leeg
-			container.innerHTML = '';
-		} else {
-			console.error("Container niet gevonden: " + this.chartId + "-container");
-		}
-	}
-
+	// Functie voor het creëren van de container
 	createContainer() {
 		this.blockContainer = document.createElement("div");
 		this.blockContainer.id = this.chartId + "-container"; // Uniek ID
@@ -43,203 +36,180 @@ class infoBlock {
 		document.querySelector(this.container).appendChild(this.blockContainer);
 	}
 
-
-	loadData(dataPath) {
-		d3.csv(dataPath, row => {
-			row.AmountOfPeople = +row.AmountOfPeople;  // Dit is goed, omdat AmountOfPeople een numerieke waarde is
-
+	// Laad de hoofdgegevens uit het data_final.csv bestand
+	async loadData(dataPath) {
+		const csv = await d3.csv(dataPath, (row) => {
+			row.AmountOfPeople = +row.AmountOfPeople;  // Zorg dat AmountOfPeople een numerieke waarde is
 			return row;
-		}).then(csv => {
-			this.data = csv;
 		});
+		this.data = csv;
 	}
 
-
-	async makeDropdown() {
-		// Fetch CSV data
-		const response = await fetch("data/municipalities.csv");
+	// Laad de gegevens van de gemeentelijst (municipalities.csv)
+	async loadMunicipalityData(dataPath) {
+		const response = await fetch(dataPath);
 		const csvText = await response.text();
 
-		// Parse CSV data into rows and extract city names and population
+		// Verwerk de CSV naar een bruikbare vorm
 		const rows = csvText.split("\n");
 		this.optionsData = rows
-			.map(row => {
-				const columns = row.split(",").map(col => col.trim()); // Split de rij in kolommen
+			.map((row) => {
+				const columns = row.split(",").map((col) => col.trim());
 				return {
-					city: columns[0], // Stadnaam (eerste kolom)
-					population: parseInt(columns[1]) // Populatie (tweede kolom)
+					city: columns[0],
+					population: parseInt(columns[1]),
 				};
 			})
-			.filter(data => data.city !== "city" && data.city !== ""); // Filter de header en lege rijen
+			.filter((data) => data.city !== "city" && data.city !== ""); // Verwijder de header en lege rijen
+	}
 
-		// Create a new <select> element
+	// Maak de dropdown met de gemeentelijst
+	makeDropdown() {
 		const dropdown = document.createElement("select");
-		dropdown.id = this.chartId + "-dropdown"; // Unique ID for this dropdown
-		dropdown.classList.add("minimal-dropdown"); // Add a custom class for styling
+		dropdown.id = this.chartId + "-dropdown"; // Uniek ID voor deze dropdown
+		dropdown.classList.add("minimal-dropdown");
 
-		// Add default option with placeholder text
 		const defaultOption = document.createElement("option");
 		defaultOption.textContent = "Select a municipality...";
-		defaultOption.value = ""; // Empty value to indicate no selection
-		defaultOption.disabled = true; // Make sure this option cannot be selected
-		defaultOption.selected = true; // Make this the default selected option
-		dropdown.appendChild(defaultOption); // Append default option to the dropdown
+		defaultOption.value = "";
+		defaultOption.disabled = true;
+		defaultOption.selected = true;
+		dropdown.appendChild(defaultOption);
 
-		// Loop through optionsData and create <option> elements dynamically
-		this.optionsData.forEach(option => {
+		this.optionsData.forEach((option) => {
 			const optionElement = document.createElement("option");
-			optionElement.textContent = option.city; // Text shown in the dropdown
-			optionElement.value = option.city; // Value for the dropdown
-			dropdown.appendChild(optionElement); // Append option to the dropdown
+			optionElement.textContent = option.city;
+			optionElement.value = option.city;
+			dropdown.appendChild(optionElement);
 		});
 
-		// Append the dropdown to the container of the chart
 		this.blockContainer.appendChild(dropdown);
 
-		// Listen for changes on the dropdown
 		dropdown.addEventListener("change", () => {
-			const selectedCity = dropdown.value; // Get the selected value
-			console.log(selectedCity,dropdown);
-			this.selectData(selectedCity); // Pass the selected city to your CSV processing function
+			const selectedCity = dropdown.value;
+			this.selectData(selectedCity); // Verwerk de selectie
 		});
 	}
 
+	// Verwerk de geselecteerde stad en update de gegevens
 	selectData(selectedCity) {
 		const result = {};
 		let totalPeopleFrom = 0;
 		let totalPeopleTo = 0;
 
-		// Check if the city exists in optionsData to get the population
+		// Functie om de populatie van een stad op te halen
 		const getPopulation = (cityName) => {
-			const cityData = this.optionsData.find(option => option.city === cityName);
-			return cityData ? cityData.population : 0; // Return population or 0 if not found
+			const cityData = this.optionsData.find((option) => option.city === cityName);
+			return cityData ? cityData.population : 0;
 		};
 
-		// Process the CSV data from this.data
-		this.data.forEach(row => {
-			const regionToName = row.RegionToName;
-			const amountOfPeople = row.AmountOfPeople;
-			const regionFromName = row.RegionFromName;
+		// Verwerk de data uit de main CSV (data_final.csv)
+		this.data.forEach((row) => {
+			const { RegionToName, AmountOfPeople, RegionFromName } = row;
 
-			// If the target city is the "to" city, add to the peopleTo count for the regionFromName
-			if (regionToName === selectedCity) {
-				if (!result[regionFromName]) {
-					result[regionFromName] = {
-						city: regionFromName,
+			if (RegionToName === selectedCity) {
+				if (!result[RegionFromName]) {
+					result[RegionFromName] = {
+						city: RegionFromName,
 						peopleFrom: 0,
 						peopleTo: 0,
-						population: getPopulation(regionFromName) // Add population for this city
+						population: getPopulation(RegionFromName),
 					};
 				}
-				result[regionFromName].peopleFrom += amountOfPeople; // People are coming *to* the target city
-				totalPeopleTo += amountOfPeople;
+				result[RegionFromName].peopleFrom += AmountOfPeople;
+				totalPeopleTo += AmountOfPeople;
 			}
 
-			// If the target city is the "from" city, add to the peopleFrom count for the regionToName
-			if (regionFromName === selectedCity) {
-				if (!result[regionToName]) {
-					result[regionToName] = {
-						city: regionToName,
+			if (RegionFromName === selectedCity) {
+				if (!result[RegionToName]) {
+					result[RegionToName] = {
+						city: RegionToName,
 						peopleFrom: 0,
 						peopleTo: 0,
-						population: getPopulation(regionToName) // Add population for this city
+						population: getPopulation(RegionToName),
 					};
 				}
-				result[regionToName].peopleTo += amountOfPeople; // People are going *from* the target city
-				totalPeopleFrom += amountOfPeople; // Keep track of total people leaving the city
+				result[RegionToName].peopleTo += AmountOfPeople;
+				totalPeopleFrom += AmountOfPeople;
 			}
 		});
 
-		// Zoek de populatie van de geselecteerde stad in optionsData
-		const selectedCityData = this.optionsData.find(option => option.city === selectedCity);
+		const selectedCityData = this.optionsData.find((option) => option.city === selectedCity);
 		const selectedPopulation = selectedCityData ? selectedCityData.population : 0;
 
-		// Voeg de populatie toe aan de selectedData
 		const selectedData = {
 			cityData: Object.values(result),
 			totals: {
 				totalPeopleFrom,
 				totalPeopleTo,
-				population: selectedPopulation // Voeg de populatie toe aan de totals
-			}
+				population: selectedPopulation,
+			},
 		};
 
-		// Create or update the display for the selected city's data
 		this.displayData(selectedData);
 	}
 
-
+	// Toon de gegevens van de geselecteerde stad
 	displayData(cityData) {
-		// Find the information container and clear its contents
 		let informationContainer = document.getElementById(this.chartId + "-information");
 
 		if (!informationContainer) {
 			informationContainer = document.createElement("div");
 			informationContainer.classList.add("informationContainer");
-
-			informationContainer.id = this.chartId + "-information"; // Unique ID for this display container
+			informationContainer.id = this.chartId + "-information";
 			this.blockContainer.appendChild(informationContainer);
 		} else {
-			// Clear the contents of the information container
 			informationContainer.innerHTML = '';
 		}
 
-		// Update the information container with the new data
 		informationContainer.innerHTML = `
-    <table class="city-data">
-        <tr>
-            <td>Total coming in</td>
-            <td class="bold">${cityData.totals.totalPeopleTo}</td>
-        </tr>
-        <tr>
-            <td>Total going out</td>
-            <td class="bold">${cityData.totals.totalPeopleFrom}</td>
-        </tr>
-        <tr>
-            <td>Population</td>
-            <td class="bold">${cityData.totals.population}</td>
-        </tr>
-    </table>`;
+			<h3>${this.city}</h3>
+			<table class="city-data">
+				<tr>
+					<td>Total coming in</td>
+					<td class="bold">${cityData.totals.totalPeopleTo}</td>
+				</tr>
+				<tr>
+					<td>Total going out</td>
+					<td class="bold">${cityData.totals.totalPeopleFrom}</td>
+				</tr>
+				<tr>
+					<td>Population</td>
+					<td class="bold">${cityData.totals.population}</td>
+				</tr>
+			</table>`;
 
-		// Create the toggle button
 		let toggleButton = document.createElement("button");
 		toggleButton.id = this.chartId + "-toggle";
-		toggleButton.className = 'expandButton iconUp'; // Voeg iconUp toe als default
+		toggleButton.className = 'expandButton iconUp';
 		let icon = document.createElement("i");
 		icon.className = 'fa-solid fa-angle-up';
 		toggleButton.appendChild(icon);
 		toggleButton.style.marginTop = "10px";
 		informationContainer.appendChild(toggleButton);
 
-
-		// Find the graph container and clear its contents
 		let graphContainer = document.getElementById(this.chartId + "-graph-container");
 
 		if (!graphContainer) {
 			graphContainer = document.createElement("div");
-			graphContainer.id = this.chartId + "-graph-container"; // Unique ID for the graph container
+			graphContainer.id = this.chartId + "-graph-container";
 			this.blockContainer.appendChild(graphContainer);
 		} else {
-			// Clear the contents of the graph container
 			graphContainer.innerHTML = '';
 		}
 
 		graphContainer.style.display = "block";
 
-		// Create or update the graph
 		new barChart({
-			container: "#" + this.chartId + "-graph-container", // Dynamically generated container
-			data: cityData.cityData, // Path to your CSV data
-			chartId: this.chartId
+			container: "#" + this.chartId + "-graph-container",
+			data: cityData.cityData,
+			chartId: this.chartId,
 		});
 
-		// Add event listener for toggling class and visibility
 		toggleButton.addEventListener("click", () => {
-			// Toggle rotation classes
 			toggleButton.classList.toggle("iconUp");
 			toggleButton.classList.toggle("iconDown");
 
-			// Toggle visibility of graphContainer
 			const isHidden = graphContainer.style.display === "none";
 			graphContainer.style.display = isHidden ? "block" : "none";
 		});

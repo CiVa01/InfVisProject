@@ -1,6 +1,8 @@
 
 const clickedPaths = [];
 let cityList = []
+let steden = ['Amsterdam, Utrecht, Ede'];
+
 
 const svgContainer = document.getElementById('svgContainer');
 
@@ -18,6 +20,8 @@ var data;
 
 // Store the network
 var network;
+
+
 
 
 // Initialize data
@@ -41,6 +45,7 @@ function loadData() {
     }
 }
 
+
 function initVis(){
     console.log("initialising visualisation");
     network = new Network(data);
@@ -49,10 +54,7 @@ function initVis(){
 
     // todo: load in the default visualisation with explanations of how things work - ROB
     // Initialize the main infoBlock
-    let infoBlockMain = new infoBlock('main', "#mainInfoBlockContainer");
-    let infoBlockExtra1 = new infoBlock('extra1', "#extraInfoBlockContainer");
-    infoBlockExtra1.passName("Amsterdam")
-
+    // let infoBlockMain = new infoBlock('main', "#mainInfoBlockContainer");
 }
 
 function updateVis() {
@@ -66,24 +68,24 @@ function updateVis() {
     // Combineer selectie uit svgLoader en infoBlock zonder duplicaten
     const svgSelection = svgLoader.getSelectedPaths();
 
-    console.log(svgSelection);
-
-
+    cityList = [...new Set([...svgSelection])];
 
     if(cityList.length == 0){
         network.stop();
+        drawInfoBlocks(svgSelection);
 
-        // defaultVis.show();
+
 
     }else if(cityList.length == 1){
         network.stop();
-
-        // infoBlockInit.show(selection)
         network.showOne(svgLoader);
+        drawInfoBlocks(svgSelection);
+
 
     }else{
         network.stop();
         network.showMore(svgLoader);
+        drawInfoBlocks(svgSelection);
 
         // infoBlockInit.show(selection[0])
         // moreVis.update(selection[1:]);
@@ -91,3 +93,57 @@ function updateVis() {
         // If 1, display oneVis()
         // If >= 2, display the first municipality first and then add blocks for all subsequent municipalites
 }
+
+
+
+
+
+function drawInfoBlocks(cities) {
+    // Selecteer de containers
+    const mainContainer = document.querySelector("#mainInfoBlockContainer");
+    const extraContainer = document.querySelector("#extraInfoBlockContainer");
+
+    // Maak de containers eerst leeg
+    mainContainer.innerHTML = "";
+    extraContainer.innerHTML = "";
+
+    // Verwerk het hoofd info block
+    if (cities.length > 0) {
+
+        let a = new infoBlock(cities[0], "#mainInfoBlockContainer", cities[0]);
+
+    }
+
+    // Verwerk de extra info blocks
+    for (let i = 1; i < cities.length; i++) {
+        new infoBlock(cities[i], "#extraInfoBlockContainer", cities[i]);
+    }
+}
+
+
+function getCityFromRegionId(name) {
+    let datapath = 'data/idToName.csv';
+
+    // Fetch the CSV file
+    fetch(datapath)
+        .then(response => response.text())
+        .then(data => {
+            // Split the CSV into rows
+            let rows = data.split('\n');
+
+            // Loop through each row to find the matching RegionFromID
+            for (let row of rows) {
+                // Split the row into columns by comma
+                let columns = row.split(',');
+
+                // Check if the first column matches the name
+                if (columns[0] === name) {
+                    console.log(columns[1])
+                    return columns[1]; // Return the value from the second column
+                }
+            }
+        });
+}
+
+
+
