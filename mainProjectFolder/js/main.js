@@ -98,7 +98,7 @@ function updateVis() {
 
 
 
-function drawInfoBlocks(cities) {
+async function drawInfoBlocks(cities) {
     // Selecteer de containers
     const mainContainer = document.querySelector("#mainInfoBlockContainer");
     const extraContainer = document.querySelector("#extraInfoBlockContainer");
@@ -109,42 +109,49 @@ function drawInfoBlocks(cities) {
 
     // Verwerk het hoofd info block
     if (cities.length > 0) {
-        let a = new infoBlock(cities[0], "#mainInfoBlockContainer", cities[0]);
-
+        // Haal de stad op via getCityFromRegionId en wacht op het resultaat
+        let city = await getCityFromRegionId(cities[0]);
+        if (city) {  // Zorg ervoor dat er een stad is
+            let a = new infoBlock(cities[0], "#mainInfoBlockContainer", city);
+        }
     }
 
     // Verwerk de extra info blocks
     for (let i = 1; i < cities.length; i++) {
-        new infoBlock(cities[i], "#extraInfoBlockContainer", cities[i]);
+        let city = await getCityFromRegionId(cities[i]);
+        if (city) {  // Zorg ervoor dat er een stad is
+            new infoBlock(cities[i], "#extraInfoBlockContainer", city);
+        }
     }
 }
 
-
-function getCityFromRegionId(name) {
+// Pas de functie aan om het resultaat van getCityFromRegionId asynchroon te verwerken
+async function getCityFromRegionId(name) {
     let datapath = 'data/idToName.csv';
-
     console.log(name);
 
-    // Fetch the CSV file
-    fetch(datapath)
-        .then(response => response.text())
-        .then(data => {
-            // Split the CSV into rows
-            let rows = data.split('\n');
+    // Haal het CSV-bestand op en wacht op de gegevens
+    const response = await fetch(datapath);
+    const data = await response.text();
 
-            // Loop through each row to find the matching RegionFromID
-            for (let row of rows) {
-                // Split the row into columns by comma
-                let columns = row.split(',');
+    // Split de CSV in rijen
+    let rows = data.split('\n');
 
-                // Check if the first column matches the name
-                if (columns[0] === name) {
-                    console.log(columns[1])
-                    return columns[1]; // Return the value from the second column
-                }
-            }
-        });
+    // Loop door de rijen om de overeenkomstige regio te vinden
+    for (let row of rows) {
+        let columns = row.split(',');
+
+        // Controleer of de eerste kolom overeenkomt met de naam
+        if (columns[0] === name) {
+            console.log(columns[1]);  // Log de gevonden stad
+            return columns[1];  // Geef de waarde van de tweede kolom terug
+        }
+    }
+
+    // Als geen stad is gevonden, return null
+    return null;
 }
+
 
 
 
