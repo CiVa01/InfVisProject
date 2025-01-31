@@ -1,7 +1,6 @@
 
 const clickedPaths = [];
 let cityList = []
-let steden = ['Amsterdam, Utrecht, Ede'];
 
 
 const svgContainer = document.getElementById('svgContainer');
@@ -52,19 +51,12 @@ function initVis(){
     svgLoader = new SvgLoader(network.regions, '/mainProjectFolder/data/Nederland_gemeenten_2021.svg');
     svgLoader.loadMap();
 
-    // todo: load in the default visualisation with explanations of how things work - ROB
     // Initialize the main infoBlock
     // let infoBlockMain = new infoBlock('main', "#mainInfoBlockContainer");
 }
 
 function updateVis() {
     console.log("updating visualisation");
-    /*todo: at hier nog moet gebeuren is als volgt:
-    het dropdown menu en de svgloader en network moeten met elkaar praten. Oftewel, selectie moet overschreven worden door het dropdown en het juiste path halen
-    De visualisaties moeten nog correct geupdate worden.
-    Denk dat dat het meest ingewikkelde is
-    */
-
     // Combineer selectie uit svgLoader en infoBlock zonder duplicaten
     const svgSelection = svgLoader.getSelectedPaths();
 
@@ -127,15 +119,14 @@ async function drawInfoBlocks(cities) {
 
             if (mainInfoBlock) {
                 const weight = getEdgeWeight(cities[0], cities[i]);
-                const inverseWeight = getEdgeWeight(cities[i], cities[0]);
-                mainInfoBlock.drawArrow(mainInfoBlock, extraInfoBlock, weight, inverseWeight);
+                const otherWeight = getEdgeWeight(cities[i], cities[0]);
+                mainInfoBlock.drawArrow(extraInfoBlock, weight, otherWeight);
             }
         }
     }
 }
 
 function getEdgeWeight(source, target) {
-    console.log("getting edge weight");
     const edge = network.network.find(edge => edge.source === source && edge.target === target);
     return edge ? edge.weight : 5;
 }

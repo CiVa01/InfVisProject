@@ -216,8 +216,6 @@ class infoBlock {
 		});
 	}
 
-	class
-
 	drawArrow(fromElement, toElement, weight, otherWeight) {
 		const svgContainer = document.getElementById("arrowsContainer");
 
@@ -232,7 +230,7 @@ class infoBlock {
 		const fromX = fromRect.left + fromRect.width / 2;
 		const fromY = fromRect.top  + fromRect.height / 2;
 		const toX = toRect.left  + toRect.width / 2;
-		const toY = toRect.top + toRect.height / 2;
+		const toY = toRect.top+ toRect.height / 2;
 
 		svg.append("line")
 			.attr("x1", fromX)
