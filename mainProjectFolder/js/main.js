@@ -113,6 +113,7 @@ async function drawInfoBlocks(cities) {
         let city = await getCityFromRegionId(cities[0]);
         if (city) {  // Zorg ervoor dat er een stad is
             let a = new infoBlock(cities[0], "#mainInfoBlockContainer", city);
+            await a.init();
         }
     }
 
@@ -120,7 +121,8 @@ async function drawInfoBlocks(cities) {
     for (let i = 1; i < cities.length; i++) {
         let city = await getCityFromRegionId(cities[i]);
         if (city) {  // Zorg ervoor dat er een stad is
-            new infoBlock(cities[i], "#extraInfoBlockContainer", city);
+            let b = new infoBlock(cities[i], "#extraInfoBlockContainer", city);
+            await b.init;
         }
     }
 }
