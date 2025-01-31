@@ -111,7 +111,7 @@ class Network {
                 // Initially, set the stroke-dashoffset to the full line length, so the dashes are hidden
                 line.attr("stroke-dashoffset", lineLength)
                     .transition()
-                    .duration(speed * 50) // Adjust speed dynamically based on edge weight
+                    .duration(((1/speed) * 800000)) // Adjust speed dynamically based on edge weight
                     .ease(d3.easeLinear)
                     .attr("stroke-dashoffset", 0)
                     .on("end", function repeat() {
@@ -119,7 +119,7 @@ class Network {
                         d3.select(this)
                             .attr("stroke-dashoffset", lineLength)
                             .transition()
-                            .duration(speed * 50)
+                            .duration(((1/speed) * 800000))
                             .ease(d3.easeLinear)
                             .attr("stroke-dashoffset", 0)
                             .on("end", repeat); // Loop the transition again after it completes
