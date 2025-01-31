@@ -109,7 +109,6 @@ function drawInfoBlocks(cities) {
 
     // Verwerk het hoofd info block
     if (cities.length > 0) {
-
         let a = new infoBlock(cities[0], "#mainInfoBlockContainer", cities[0]);
 
     }
@@ -123,6 +122,8 @@ function drawInfoBlocks(cities) {
 
 function getCityFromRegionId(name) {
     let datapath = 'data/idToName.csv';
+
+    console.log(name);
 
     // Fetch the CSV file
     fetch(datapath)
