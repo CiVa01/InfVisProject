@@ -148,7 +148,7 @@ async function drawInfoBlocks(cities) {
                 mainInfoBlock.drawArrow(extraInfoBlock, weight, otherWeight, arrowSvg);
             }
         }
-    }console.log(arrowSvg);
+    }
 }
 
 function getEdgeWeight(source, target) {
