@@ -111,22 +111,3 @@ h2 {
   margin: 10px;
   text-align: center;
 }
-
-
-#mainInfoBlockContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  overflow: auto;
-}
-
-#extraInfoBlockContainer {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 100%;
-  overflow: auto;
-}
