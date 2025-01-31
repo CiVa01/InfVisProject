@@ -106,7 +106,7 @@ class infoBlock {
 
 		// Verwerk de data uit de main CSV (data_final.csv)
 		this.data.forEach((row) => {
-			const { RegionToName, AmountOfPeople, RegionFromName } = row;
+			const {RegionToName, AmountOfPeople, RegionFromName} = row;
 
 			if (RegionToName === selectedCity) {
 				if (!result[RegionFromName]) {
@@ -216,19 +216,23 @@ class infoBlock {
 		});
 	}
 
+	class
+
 	drawArrow(fromElement, toElement, weight, otherWeight) {
-		const svg = d3.select("#arrowsContainer").append("svg")
-			.attr("width", "100%")
-			.attr("height", "100%")
+		const svgContainer = document.getElementById("arrowsContainer");
+
+		const svg = d3.select(svgContainer).append("svg")
+			.attr("width", svgContainer.clientWidth)
+			.attr("height", svgContainer.clientHeight)
 			.style("position", "absolute");
 
-		const fromRect = fromElement.blockContainer.querySelector("svg").getBoundingClientRect();
-		const toRect = toElement.blockContainer.querySelector("svg").getBoundingClientRect();
+		const fromRect = fromElement.blockContainer.getBoundingClientRect();
+		const toRect = toElement.blockContainer.getBoundingClientRect();
 
-		const fromX = fromRect.left + window.scrollX + fromRect.width / 2;
-		const fromY = fromRect.top + window.scrollY + fromRect.height / 2;
-		const toX = toRect.left + window.scrollX + toRect.width / 2;
-		const toY = toRect.top + window.scrollY + toRect.height / 2;
+		const fromX = fromRect.left + fromRect.width / 2;
+		const fromY = fromRect.top  + fromRect.height / 2;
+		const toX = toRect.left  + toRect.width / 2;
+		const toY = toRect.top + toRect.height / 2;
 
 		svg.append("line")
 			.attr("x1", fromX)
@@ -247,3 +251,4 @@ class infoBlock {
 			.attr("stroke-width", otherWeight > 5 ? otherWeight : 5);
 	}
 }
+
