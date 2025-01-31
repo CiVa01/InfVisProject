@@ -1,5 +1,6 @@
 
 const clickedPaths = [];
+let cityList = []
 
 const svgContainer = document.getElementById('svgContainer');
 
@@ -7,6 +8,7 @@ const svgContainer = document.getElementById('svgContainer');
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 document.getElementById("svgContainer").addEventListener("click", updateVis);
+
 
 // Create a global object for the SVG
 let svgLoader;
@@ -47,8 +49,10 @@ function initVis(){
 
     // todo: load in the default visualisation with explanations of how things work - ROB
     // Initialize the main infoBlock
-    let infoBlockMain = new infoBlock('main');
-    infoBlockMain.init()
+    let infoBlockMain = new infoBlock('main', "#mainInfoBlockContainer");
+    let infoBlockExtra1 = new infoBlock('extra1', "#extraInfoBlockContainer");
+    infoBlockExtra1.passName("Amsterdam")
+
 }
 
 function updateVis() {
@@ -59,20 +63,28 @@ function updateVis() {
     Denk dat dat het meest ingewikkelde is
     */
 
-    let selection = svgLoader.getSelectedPaths();
-    console.log(selection);
+    // Combineer selectie uit svgLoader en infoBlock zonder duplicaten
+    const svgSelection = svgLoader.getSelectedPaths();
 
-    if(selection.length == 0){
+    console.log(svgSelection);
+
+
+
+    if(cityList.length == 0){
         network.stop();
+
         // defaultVis.show();
-    }else if(selection.length == 1){
+
+    }else if(cityList.length == 1){
         network.stop();
 
         // infoBlockInit.show(selection)
         network.showOne(svgLoader);
+
     }else{
         network.stop();
         network.showMore(svgLoader);
+
         // infoBlockInit.show(selection[0])
         // moreVis.update(selection[1:]);
     }

@@ -1,10 +1,10 @@
-#mainInfoBlockContainer, #extraInfoBlockContainer{
+.info-block{
     background: #dadada;
     border-radius: 30px;
     padding: 15px;
     width: 306px;
-    margin: 0 auto;
     box-sizing: border-box;
+    margin: 0 auto 20px;
 }
 
 .container {
@@ -63,6 +63,11 @@ table.city-data td:first-child {
 #main-information, #extra-information {
     position: relative;
 }
+
+.informationContainer {
+    position: relative;
+}
+
 
 .expandButton {
     position: absolute;

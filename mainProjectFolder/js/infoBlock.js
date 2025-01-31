@@ -1,14 +1,46 @@
 class infoBlock {
-	constructor(chartId) {
+	constructor(chartId, container) {
 		this.chartId = chartId;
-		this.container = "#mainInfoBlockContainer";
+		this.container = container;
+		this.blockContainer =  []
 		this.datapath = "data/data_final.csv"
 		this.optionsData = []; // Om de optiesData op te slaan
+
+		this.createContainer();
+		this.init();
 	}
 
 	init(){
 		this.loadData(this.datapath);
 		this.makeDropdown();
+
+
+		document.addEventListener("change", function(event) {
+			if (event.target.matches("select")) {
+				console.log('selected something')
+				updateVis();
+			}
+		});
+	}
+
+
+	clearContainer() {
+		// Vind het container-element met de unieke ID
+		let container = document.getElementById(this.chartId + "-container");
+
+		if (container) {
+			// Maak de inhoud van de container leeg
+			container.innerHTML = '';
+		} else {
+			console.error("Container niet gevonden: " + this.chartId + "-container");
+		}
+	}
+
+	createContainer() {
+		this.blockContainer = document.createElement("div");
+		this.blockContainer.id = this.chartId + "-container"; // Uniek ID
+		this.blockContainer.classList.add("info-block"); // Voeg styling toe indien nodig
+		document.querySelector(this.container).appendChild(this.blockContainer);
 	}
 
 
@@ -62,15 +94,15 @@ class infoBlock {
 		});
 
 		// Append the dropdown to the container of the chart
-		document.querySelector(this.container).appendChild(dropdown);
+		this.blockContainer.appendChild(dropdown);
 
 		// Listen for changes on the dropdown
 		dropdown.addEventListener("change", () => {
 			const selectedCity = dropdown.value; // Get the selected value
+			console.log(selectedCity,dropdown);
 			this.selectData(selectedCity); // Pass the selected city to your CSV processing function
 		});
 	}
-
 
 	selectData(selectedCity) {
 		const result = {};
@@ -143,8 +175,10 @@ class infoBlock {
 
 		if (!informationContainer) {
 			informationContainer = document.createElement("div");
+			informationContainer.classList.add("informationContainer");
+
 			informationContainer.id = this.chartId + "-information"; // Unique ID for this display container
-			document.querySelector(this.container).appendChild(informationContainer);
+			this.blockContainer.appendChild(informationContainer);
 		} else {
 			// Clear the contents of the information container
 			informationContainer.innerHTML = '';
@@ -184,7 +218,7 @@ class infoBlock {
 		if (!graphContainer) {
 			graphContainer = document.createElement("div");
 			graphContainer.id = this.chartId + "-graph-container"; // Unique ID for the graph container
-			document.querySelector(this.container).appendChild(graphContainer);
+			this.blockContainer.appendChild(graphContainer);
 		} else {
 			// Clear the contents of the graph container
 			graphContainer.innerHTML = '';

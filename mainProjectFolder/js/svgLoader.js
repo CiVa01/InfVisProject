@@ -67,6 +67,7 @@ class SvgLoader {
 		console.log(this.selectedPaths);
 	}
 
+
 	// Method to get the list of selected paths
 	getSelectedPaths() {
 		console.log("fetching paths");
