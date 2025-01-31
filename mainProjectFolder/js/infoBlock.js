@@ -217,14 +217,15 @@ class infoBlock {
 		});
 	}
 
-	drawArrow(toElement, weight, otherWeight) {
+	drawArrow(toElement, weight, otherWeight, arrowSvg) {
 		const svgContainer = document.getElementById("arrowsContainer");
 
 		// op de een of andere manier worden de svgs niet zichtbaar
-		let arrowSvg = d3.select("arrowsContainer").append("svg")
-			.attr("width", svgContainer.clientWidth)
-			.attr("height", svgContainer.clientHeight)
+		arrowSvg.append("svg")
+			.attr("width", "100%")
+			.attr("height", "100%")
 			.style("position", "absolute");
+		console.log(arrowSvg);
 
 		const fromRect = this.blockContainer.getBoundingClientRect();
 		const toRect = toElement.blockContainer.getBoundingClientRect();
@@ -234,7 +235,7 @@ class infoBlock {
 		const toX = toRect.left  + toRect.width / 2;
 		const toY = toRect.top+ toRect.height / 2;
 
-		arrowSvg.append("path")
+		arrowSvg.append("line")
 			.attr("x1", fromX)
 			.attr("y1", fromY)
 			.attr("x2", toX)
@@ -242,11 +243,11 @@ class infoBlock {
 			.attr("stroke", "darkblue")
 			.attr("stroke-width", weight > 5 ? Math.min(20, otherWeight) : 5);
 
-		arrowSvg.append("path")
+		arrowSvg.append("line")
 			.attr("x1", toX)
-			.attr("y1", toY)
+			.attr("y1", toY + 50)
 			.attr("x2", fromX)
-			.attr("y2", fromY)
+			.attr("y2", fromY + 50)
 			.attr("stroke", "gold")
 			.attr("stroke-width", otherWeight > 5 ? Math.min(20, otherWeight) : 5);
 	}

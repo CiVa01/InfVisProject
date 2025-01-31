@@ -142,12 +142,13 @@ async function drawInfoBlocks(cities) {
             let extraInfoBlock = new infoBlock(cities[i], "#extraInfoBlockContainer", city.trimEnd(), true);
 
             if (mainInfoBlock) {
+                let arrowSvg = d3.select("#arrowsContainer");
                 const weight = getEdgeWeight(cities[0], cities[i]);
                 const otherWeight = getEdgeWeight(cities[i], cities[0]);
-                mainInfoBlock.drawArrow(extraInfoBlock, weight, otherWeight);
+                mainInfoBlock.drawArrow(extraInfoBlock, weight, otherWeight, arrowSvg);
             }
         }
-    }
+    }console.log(arrowSvg);
 }
 
 function getEdgeWeight(source, target) {
