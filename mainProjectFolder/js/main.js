@@ -112,8 +112,8 @@ async function drawInfoBlocks(cities) {
         // Haal de stad op via getCityFromRegionId en wacht op het resultaat
         let city = await getCityFromRegionId(cities[0]);
         if (city) {  // Zorg ervoor dat er een stad is
-            let a = new infoBlock(cities[0], "#mainInfoBlockContainer", city);
-            await a.init();
+            new infoBlock(cities[0], "#mainInfoBlockContainer", city.trimEnd(), false);
+
         }
     }
 
@@ -121,8 +121,7 @@ async function drawInfoBlocks(cities) {
     for (let i = 1; i < cities.length; i++) {
         let city = await getCityFromRegionId(cities[i]);
         if (city) {  // Zorg ervoor dat er een stad is
-            let b = new infoBlock(cities[i], "#extraInfoBlockContainer", city);
-            await b.init;
+            new infoBlock(cities[i], "#extraInfoBlockContainer", city.trimEnd(), true);
         }
     }
 }

@@ -1,5 +1,5 @@
 class infoBlock {
-	constructor(chartId, container, city) {
+	constructor(chartId, container, city, collapsed) {
 		this.city = city;
 		this.chartId = chartId;
 		this.container = container;
@@ -10,6 +10,7 @@ class infoBlock {
 		this.data = [];
 		this.createContainer();
 		this.init();
+		this.style = collapsed ? 'none' : 'block';
 	}
 
 	// Verantwoordelijk voor het laden van de data en het aanroepen van makeDropdown
@@ -181,7 +182,7 @@ class infoBlock {
 
 		let toggleButton = document.createElement("button");
 		toggleButton.id = this.chartId + "-toggle";
-		toggleButton.className = 'expandButton iconUp';
+		toggleButton.className = 'expandButton iconDown';
 		let icon = document.createElement("i");
 		icon.className = 'fa-solid fa-angle-up';
 		toggleButton.appendChild(icon);
@@ -198,7 +199,7 @@ class infoBlock {
 			graphContainer.innerHTML = '';
 		}
 
-		graphContainer.style.display = "block";
+		graphContainer.style.display = this.style;
 
 		new barChart({
 			container: "#" + this.chartId + "-graph-container",
@@ -214,5 +215,4 @@ class infoBlock {
 			graphContainer.style.display = isHidden ? "block" : "none";
 		});
 	}
-
 }
