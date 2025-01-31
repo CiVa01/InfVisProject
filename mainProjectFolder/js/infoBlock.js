@@ -11,6 +11,7 @@ class infoBlock {
 		this.createContainer();
 		this.init();
 		this.style = collapsed ? 'none' : 'block';
+		this.arrowSvg = d3.select("#arrowsContainer");
 	}
 
 	// Verantwoordelijk voor het laden van de data en het aanroepen van makeDropdown
@@ -216,15 +217,17 @@ class infoBlock {
 		});
 	}
 
-	drawArrow(fromElement, toElement, weight, otherWeight) {
+	drawArrow(toElement, weight, otherWeight) {
 		const svgContainer = document.getElementById("arrowsContainer");
 
-		const svg = d3.select(svgContainer).append("svg")
+		// op de een of andere manier worden de svgs niet zichtbaar
+		// ook al worden ze nu global aangemaakt en onthouden
+		this.arrowSvg.append("svg")
 			.attr("width", svgContainer.clientWidth)
 			.attr("height", svgContainer.clientHeight)
 			.style("position", "absolute");
 
-		const fromRect = fromElement.blockContainer.getBoundingClientRect();
+		const fromRect = this.blockContainer.getBoundingClientRect();
 		const toRect = toElement.blockContainer.getBoundingClientRect();
 
 		const fromX = fromRect.left + fromRect.width / 2;
@@ -232,7 +235,7 @@ class infoBlock {
 		const toX = toRect.left  + toRect.width / 2;
 		const toY = toRect.top+ toRect.height / 2;
 
-		svg.append("line")
+		this.arrowSvg.append("line")
 			.attr("x1", fromX)
 			.attr("y1", fromY)
 			.attr("x2", toX)
@@ -240,7 +243,7 @@ class infoBlock {
 			.attr("stroke", "black")
 			.attr("stroke-width", weight > 5 ? weight : 5);
 
-		svg.append("line")
+		this.arrowSvg.append("line")
 			.attr("x1", toX)
 			.attr("y1", toY)
 			.attr("x2", fromX)
